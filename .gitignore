@@ -1,0 +1,12 @@
+web/bundles/
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+app/config/*.local.yml
+app/phpunit.xml
+build/
+vendor/
+.project
+.settings
+.build.xml
+.buildpath
