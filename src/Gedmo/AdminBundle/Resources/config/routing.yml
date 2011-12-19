@@ -1,0 +1,5 @@
+_admin_article:
+    resource: @GedmoAdminBundle/Controller/ArticleController.php
+    type:     annotation
+    prefix:   admin
+

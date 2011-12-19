@@ -2,3 +2,10 @@
 #_internal:
 #   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #   prefix:   /_internal
+
+home:
+    pattern:  /
+    defaults: { _controller: GedmoBlogBundle:Article:index }
+
+_blog:
+    resource: "@GedmoBlogBundle/Resources/config/routing.yml"

@@ -1,0 +1,46 @@
+{% if pageCount > 1 %}
+<div id="navigation">
+    {% if first is defined and current != first %}
+        <span class="first">
+            <a href="{{ path(route, query|merge({'page': first})) }}">
+                <img src="{{ asset('bundles/gedmoblog/img/nav/first.gif') }}" alt="&lt;&lt;" />
+            </a>
+        </span> 
+    {% endif %}
+    
+    {% if previous is defined %}
+        <span class="previous">
+            <a href="{{ path(route, query|merge({'page': previous})) }}">
+                <img src="{{ asset('bundles/gedmoblog/img/nav/left.gif') }}" alt="&lt;" />
+            </a>
+        </span> 
+    {% endif %}
+    
+    {% for page in pagesInRange %} 
+        {% if page != current %}
+            <span class="page">
+                <a href="{{ path(route, query|merge({'page': page})) }}">{{ page }}</a>
+            </span>
+        {% else %}
+            <span class="current">{{ page }}</span>   
+        {% endif %}
+    
+    {% endfor %}
+    
+    {% if next is defined %}  
+        <span class="next">
+            <a href="{{ path(route, query|merge({'page': next})) }}">
+                <img src="{{ asset('bundles/gedmoblog/img/nav/right.gif') }}" alt="&gt;" />
+            </a>
+        </span>
+    {% endif %}
+    
+    {% if last is defined and current != last %}  
+        <span class="last">
+            <a href="{{ path(route, query|merge({'page': last})) }}">
+                <img src="{{ asset('bundles/gedmoblog/img/nav/last.gif') }}" alt="&gt;&gt;" />
+            </a>
+        </span>
+    {% endif %}
+</div>
+{% endif %}

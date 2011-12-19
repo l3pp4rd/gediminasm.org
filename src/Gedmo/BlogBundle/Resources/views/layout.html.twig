@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <title>{% block title %}{% endblock %} / Blog</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Language" content="en" />
+  <!--[if IE]>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <![endif]-->
+  
+  <meta name="copyright" content="Gediminas Morkevicius" />
+  <meta name="author" content="gediminas.morkevicius@gmail.com" />
+  <meta name="publisher" content="Gediminas Morkevicius" />
+  
+  <meta name="description" content="{% block description %}{% endblock %} Articles about programming in PHP5, open source snippets. Doctrine2, Symfony2" />
+  <meta name="keywords" content="blog, gediminas, morkevicius, php5, doctrine2, behavioral, extensions" />
+  <meta name="robots" content="{% block robots %}index, follow, all{% endblock %}" />
+  
+  {% stylesheets
+    '@GedmoBlogBundle/Resources/public/css/twitter.css'
+    '@GedmoBlogBundle/Resources/public/css/style.css'
+        
+      output='css/blog.css'
+  %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="all"/>
+  {% endstylesheets %}
+  {% block styles %}
+  {% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <div class="topbar">
+    <div class="fill">
+      <div class="container">
+        <a class="brand" href="#">Gediminas Morkevicius blog</a>
+        {{ knp_menu_render('GedmoBlogBundle:Builder:mainMenu') }}
+      </div>
+    </div>
+  </div>
+    
+  <div class="container">
+    {% block content %}{% endblock %}
+    
+    <footer>
+      <p>&copy; 2010-2011 Gediminas Morkevicius, powered by: <a href="">twitter bootstrap</a>, <a href="">Symfony2</a>, <a href="">Doctrine2</a> PHP-5.3</p>
+    </footer>
+  </div>
+
+  {% javascripts
+    '@GedmoBlogBundle/Resources/public/js/lib/jquery.js'
+    '@GedmoBlogBundle/Resources/public/js/blog.js'
+      
+       output='js/blog.js'
+  %}
+    <script src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+  {% block scripts %}
+  {% endblock %}
+</body>
+</html>

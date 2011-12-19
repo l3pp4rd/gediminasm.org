@@ -1,4 +1,7 @@
 web/bundles/
+web/css/
+web/js/
+web/bundles/
 app/bootstrap.php.cache
 app/cache/*
 app/logs/*

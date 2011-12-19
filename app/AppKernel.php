@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
+            new Gedmo\BlogBundle\GedmoBlogBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

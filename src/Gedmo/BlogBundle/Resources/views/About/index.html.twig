@@ -1,0 +1,21 @@
+{% extends "GedmoBlogBundle::layout.html.twig" %}
+
+{% block title %}About{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<h1>About Me</h1>
+    
+<p>Hi, I'm Gediminas Morkevičius, living in Lithuania, Kaunas.</p>
+<img alt="me" src="{{ asset('bundles/gedmoblog/img/photo/me.jpg') }}">
+<p>My skills:</p>
+<ul>
+    <li>Batchelor degree in "Informatics Engineering"</li>
+    <li>C, C++ - 2 years expereace working with MFC, OWL frameworks.</li>
+    <li>PHP5 - 2,5 year expereance. Working on Zend, CakePHP frameworks.</li>
+    <li>Most experience is in eCommerce shops and their sub-systems</li>
+    <li>In spare time I`m mostly interested in new technologies on agile development and tools</li>
+</ul>
+
+<p>You can find my opensource projects on <a href="http://github.com/l3pp4rd" target="new">github</a></p>
+{% endblock %}

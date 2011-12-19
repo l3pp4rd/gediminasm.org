@@ -1,0 +1,25 @@
+{% extends "GedmoBlogBundle::layout.html.twig" %}
+
+{% block title %}Articles{% endblock %}
+{% block description %}List of articles about new technologies in PHP 5.3.x. {% endblock %}
+
+{% block content %}
+
+<h1>PHP 5.3 tricks and tips using upcomming technologies</h1>
+{% for article in articles %}
+    <h2><a href="{{ path('blog_article_view', {'slug': article.0.slug}) }}">{{ article.0.title }}</a></h2>
+
+    <div class="summary">{{ article.0.summary|raw }}</div>
+
+    <p class="post-footer align-right">
+        <a href="{{ path('blog_article_view', {'slug': article.0.slug}) }}" title="Read more about: {{ article.0.title }}" class="readmore">Read more</a>
+        <a href="{{ path('blog_article_view', {'slug': article.0.slug}) }}#1" title="Read comments of this article" class="comments">
+            Comments ({{ article.num_comments }})
+        </a>
+        <span class="date">{{ time_diff(article.0.created) }}</span>
+    </p>
+{% endfor %}
+
+{{ articles.render()|raw }}
+
+{% endblock %}

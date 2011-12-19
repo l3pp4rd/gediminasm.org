@@ -1,0 +1,33 @@
+{% extends "GedmoBlogBundle::layout.html.twig" %}
+
+{% block title %}Extension Tests{% endblock %}
+
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block assets %}
+    <link href="{{ asset('bundles/gedmotestextensions/css/tests.css') }}" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="languages">
+{% if languages is defined %} 
+    {% for language in languages %}
+        <ul>
+            <li {% if language.getLanguage == app.session.getLocale %}class="active"{% endif %}>
+                <a href="{{ path('test_language_change', {'name': language.getLanguage}) }}" title="{{ language.getTitle }}">
+                    {{ language.getTitle }}
+                </a>
+            </li>
+        </ul>
+    {% endfor %}
+{% else %}
+    <div class="active-language">Active language is: {{ app.session.getLocale }}</div>
+{% endif %}
+</div>
+
+{% if app.session.hasflash('message') %}
+<div id="flashMessage">{{ app.session.flash('message') }}</div>
+{% endif %}
+
+{% endblock %}

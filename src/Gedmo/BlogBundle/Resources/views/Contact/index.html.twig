@@ -1,0 +1,41 @@
+{% extends "GedmoBlogBundle::layout.html.twig" %}
+
+{% block title %}Contact{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block assets %}
+    <link href="{{ asset('bundles/gedmoblog/css/contact/index.css') }}" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<h1>Contact Me</h1>
+    
+<ul>
+   <li>Email: gediminas.morkevicius@gmail.com</li>
+   <li>Skype: sektor.22</li>
+</ul>
+
+<div id="feedback_form">
+    <form id="contact_form" action="{{ path('blog_contact') }}" {{ form_enctype(form) }} method="post">
+        <div class="input text required">
+            {{ form_label(form.sender) }}
+            <div class="error-message">{{ form_errors(form.sender) }}</div>
+            {{ form_field(form.sender) }}
+            </div>
+        <div class="input text required">
+            {{ form_label(form.email) }}
+            <div class="error-message">{{ form_errors(form.email) }}</div>
+            {{ form_field(form.email) }}
+        </div>
+        <div class="input textarea required">
+            {{ form_label(form.message) }}
+            <div class="error-message">{{ form_errors(form.message) }}</div>
+            {{ form_field(form.message) }}
+        </div>
+        {{ form_hidden(form) }}
+        <div class="input submit">
+            <input type="submit" class="button" value="Submit" id="comment-submit">
+        </div>
+    </form>
+</div>
+{% endblock %}

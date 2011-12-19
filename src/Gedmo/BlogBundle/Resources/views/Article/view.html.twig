@@ -1,0 +1,54 @@
+{% extends "GedmoBlogBundle::layout.html.twig" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+{% block description %}{{ article.meta }} {% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    blog.onArticleViewReady();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+  <h1 id="{{ article.id }}">{{ article.title }}</h1>
+  
+  <div class="row summary">{{ article.summary|raw }}</div>
+  
+  <div class="row content">{{ article.content|raw }}</div>
+  
+  <div id="post-comment" class="row">
+    <form name="comment" id="comment-form">
+      <fieldset>
+      <legend>Post a comment</legend>
+      <input type="hidden" value="{{ article.id }}" name="comment[article_id]" />
+      <div class="clearfix">
+        <div class="input">
+          <input id="comment-subject" type="text" class="xlarge" placeholder="Subject" value="" name="comment[subject]"/>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="input">
+          <input type="text" class="xlarge" value="" placeholder="Author" name="comment[author]"/>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="input">
+          <textarea class="xlarge" name="comment[content]" placeholder="Comment body"></textarea>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <button class="btn primary" type="submit">Submit</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+  
+  <h2>Comments</h2>
+  
+  <div class="row" id="comments"></div>
+  <a href="#" id="show-more-comments">Show more</a>
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends "GedmoTestExtensionsBundle::sub_layout.html.twig" %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="actions">
+    <ul>
+        <li><a href="{{ path('test_category_log', {'id': category.getId}) }}">Revision Log</a></li>
+        <li><a href="{{ path('test_category_tree') }}">Show Tree</a></li>
+        <li><a href="{{ path('test_category_list') }}">List Categories</a></li>
+        <li><a href="{{ path('test_category_add') }}">Add Category</a></li>
+        <li><a href="{{ path('test_language_add') }}">Add Language</a></li>
+    </ul>
+</div>
+
+<h3>Node Path:</h3>
+{% set pathString = '' %}
+{% for node in path %}
+    {% set pathString = pathString ~ '/' ~ node.getTitle %}
+{% endfor %}
+<p>{{ pathString }}</p>
+
+<h3>Current record</h3>
+
+<table class="table">
+<tr>
+    <th>Field</th>
+    <th>Value</th>
+    <th>Translations</th>
+</tr>
+<tr class="row-a">
+    <td>Id</td>
+    <td>{{ category.getId }}</td>
+    <td>Not translatable</td>
+</tr>
+<tr class="row-b">
+    <td>Title</td>
+    <td>{{ category.getTitle }}</td>
+    <td>
+    <table>
+    {% for lang, translation in translations %}
+        <tr><td style="border:none">{{ lang }}: {{ translation.title }}</td></tr>
+    {% endfor %}
+    </table>
+    </td>
+</tr>
+<tr class="row-a">
+    <td>Description</td>
+    <td>{{ category.getDescription }}</td>
+    <td>
+    <table>
+    {% for lang, translation in translations %}
+        <tr><td style="border:none">{{ lang }}: {{ translation.description }}</td></tr>
+    {% endfor %}
+    </table>
+    </td>
+</tr>
+<tr class="row-b">
+    <td>Slug</td>
+    <td>{{ category.getSlug }}</td>
+    <td>
+    <table>
+    {% for lang, translation in translations %}
+        <tr><td style="border:none">{{ lang }}: {{ translation.slug }}</td></tr>
+    {% endfor %}
+    </table>
+    </td>
+</tr>
+<tr class="row-a">
+    <td>Updated</td>
+    <td>{{ category.getUpdated|date('Y-m-d H:i:s') }}</td>
+    <td>Not translatable</td>
+</tr>
+<tr class="row-b">
+    <td>Created</td>
+    <td>{{ category.getCreated|date('Y-m-d H:i:s') }}</td>
+    <td>Not translatable</td>
+</tr>
+<tr class="row-a">
+    <td>Lft</td>
+    <td>{{ category.getLeft }}</td>
+    <td>Tree field</td>
+</tr>
+<tr class="row-b">
+    <td>Rgt</td>
+    <td>{{ category.getRight }}</td>
+    <td>Tree field</td>
+</tr>
+<tr class="row-a">
+    <td>Parent</td>
+    {% set parent = category.getParent %}
+    <td>{{ parent ? parent.getTitle : 'NULL' }}</td>
+    <td>Tree field</td>
+</tr>
+<tr class="row-b">
+    <td>Root</td>
+    <td>{{ category.getRoot }}</td>
+    <td>Tree field</td>
+</tr>
+<tr class="row-a">
+    <td>Level</td>
+    <td>{{ category.getLevel }}</td>
+    <td>Tree field</td>
+</tr>
+</table>
+
+<h3>Tree Behavior Configuration</h3>
+<ul>
+    <li><strong>@gedmo:Tree(type="nested")</strong></li>
+    <li>@gedmo:TreeParent <strong>field: </strong>"parent"</li>
+    <li>@gedmo:TreeLeft <strong>field: </strong>"lft"</li>
+    <li>@gedmo:TreeRight <strong>field: </strong>"rgt"</li>
+    <li>@gedmo:TreeLevel <strong>field: </strong>"level"</li>
+    <li>@gedmo:TreeRoot <strong>field: </strong>"root"</li>
+</ul>
+
+<h3>Sluggable Behavior Configuration</h3>
+<ul>
+    <li>@gedmo:Sluggable <strong>field: </strong>"title"</li>
+    <li>@gedmo:Sluggable <strong>field: </strong>"description"</li>
+    <li>@gedmo:Slug <strong>field: </strong>"slug"</li>
+</ul>
+
+<h3>Translatable Behavior Configuration</h3>
+<ul>
+    <li>@gedmo:Translatable <strong>field: </strong>"title"</li>
+    <li>@gedmo:Translatable <strong>field: </strong>"description"</li>
+    <li>@gedmo:Translatable <strong>field: </strong>"slug"</li>
+    <li>@gedmo:Locale <strong>field: </strong>"locale"</li>
+</ul>
+
+<h3>Timestampable Behavior Configuration</h3>
+<ul>
+    <li>@gedmo:Timestampable(on="create") <strong>field: </strong>"created"</li>
+    <li>@gedmo:Timestampable(on="update") <strong>field: </strong>"updated"</li>
+</ul>
+
+{% endblock %}

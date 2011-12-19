@@ -1,0 +1,533 @@
+/* Main Layout Element Styles */
+
+* { padding: 0px; margin: 0px; }
+
+h1, 
+h2, 
+h3,
+h4,
+h5 {
+    color: #838b8d;
+    font-family: verdana, Arial,Helvetica;  
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    height: auto;
+    letter-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-decoration: none;
+    margin-bottom: 2px;
+}
+
+h1 { font-size: 18px; margin-bottom: 15px; }
+h2 { font-size: 12px; }
+h3, h4, h5 { font-size: 10px; }
+
+p {
+    font-family: verdana, Arial,Helvetica;
+    font-size: 10px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: auto;
+    letter-spacing: normal;
+    line-height: normal;
+    margin-bottom: 2px;
+    text-transform: none;
+    text-decoration: none;
+    margin: 0px 0px 12px 0px;
+}
+
+img { border: 0px; }
+
+a:active,
+a:hover {
+    color: #669900;
+    text-decoration: none;
+}
+
+a:visited,
+a:link {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* @Group Admin Page Layout */
+
+body {
+    font-size: 10px;
+    font-weight: 400;
+    font-family: verdana, arial;
+}
+#top-header {
+    
+} 
+#bottom-header {
+    background:#243135 url(../img/layout/bg_banner.png) repeat-x scroll left top;
+    border-bottom:1px solid #D9E2E6;
+    height: 70px;
+    color: white;
+}
+
+#admin-logo-header {
+    width: 50%;
+    float: left;
+    margin-top: 20px;
+    margin-left: 60px;
+    font-size:20px;
+    font-weight:bold;   
+}
+
+#admin-logout {
+    width:40%;
+    text-align:center;
+    float:right;
+    margin-top:40px;
+    height:auto;
+    font-weight:bold;
+}
+
+#admin-logout a:link,
+#admin-logout a:visited,
+.admin-table th a:link,
+.admin-table th a:visited,
+#footer a:link,
+#footer a:visited {
+    color: white;   
+}
+
+#admin-logout a:hover,
+.admin-table th a:hover,
+#footer a:hover {
+    color:red;
+}
+
+#menu-container {
+    background:transparent url(../img/layout/bg_block.gif) repeat-x scroll left top;
+    color:#666666;
+    height:auto !important;
+    margin:0 10px;
+    min-height:70px;
+    padding:20px 10px 10px;
+    width: 250px;
+    float: left;
+    display: block; 
+}
+
+#data-wrap {
+    margin-top: 15px;
+    background: #ffffff;
+    height:100%;
+}
+
+#content {
+    background:transparent url(../img/layout/bg_block.gif) repeat-x scroll left top;
+    color:#666666;
+    height:100%;
+    margin:0 10px 0 300px;
+    min-height:70px;
+    padding:20px 10px 10px;
+}
+
+#footer {
+    background:#243135 url(../img/layout/bg_banner.png) repeat-x scroll left top;
+    border-top:1px solid #D9E2E6;
+    height: 33px;
+    color: white;
+    clear: both;
+    text-align: center;
+    padding-top: 10px;
+}
+
+/*no records*/
+#empty-records {
+    text-align:left;
+    margin: 50px 15%;
+    /*font-family:Georgia, 'Times New Roman', Times, serif;*/
+    font-weight:bold;
+    font-size:14px;
+}
+
+/* @Group common view action layout */
+
+.heading {
+    text-align: left;
+    width: 100%;
+    padding-left: 45px;
+}
+
+#session-flash-message {
+    color: red; 
+    font-size:14px;
+    text-align:center;
+    font-weight:bold;
+    margin: 0px auto 10px auto;
+}
+
+#admin-actions,
+#admin-view-content {
+    padding: 20px 50px;
+    width: auto;
+}
+
+#admin-actions fieldset,
+.admin-form fieldset {
+    padding: 3px 6px 7px 10px;
+}
+
+#admin-actions legend,
+.admin-form legend {
+    padding: 0 5px;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.action-links {
+    float: left;
+    width: 35%
+}
+
+.action-links ul {
+    margin: 5px 0 5px 25px;
+}
+
+.action-links li {
+    background-image: url(../img/layout/list_bullet.gif);
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+    list-style-type: none;
+    margin-bottom: 5px;
+    padding-left: 15px;
+}
+
+.action-links li a {
+    font-weight:bold;
+}
+
+.action-links li a:hover {
+    color:red;
+}
+
+.action-search {
+    display: block;
+    float: right;
+    width: 60%;
+}
+
+.search-label {
+    font-weight:bold;
+    text-align:right;
+    padding: 4px 0;
+    width:100px;
+    float:left;
+    display: inline;
+}
+
+.search-value {
+    text-align:left;
+    width:200px;
+    float:left;
+    padding-left:15px;
+    display:inline;
+}
+
+.input-search {
+    width: 100px;
+    text-align:left;
+    border-left: 1px solid #AAAAAA;
+    border-top: 1px solid #AAAAAA;
+    border-right: 1px solid #D3D3D3;
+    border-bottom: 1px solid #D3D3D3;
+    padding: 4px 6px;
+    margin-right:10px;
+}
+
+.search-value input[type="button"] {
+    width: 50px;    
+}
+
+/* @Group common EDIT VIEW action layout */
+
+.item-image-preview {
+    padding: 10px;
+    text-align: left;
+}
+
+.item-image-preview .gallery {
+    height: 100px;  
+}
+
+.view-preview {
+    margin-left: 200px; 
+}
+
+.image-preview-list-item {
+    clear: both;
+    display: block;
+    margin-top: 10px;   
+}
+
+.category-select-container {
+    padding: 10px 35px; 
+}
+
+/* action INDEX layout */
+
+.admin-table {
+    text-align:center;
+    border: 2px solid #D9E2E6;
+    border-collapse:collapse;
+    width:100%;
+}
+
+.admin-table th {
+    background: #243135 url(../img/layout/bg_banner.png) repeat-x scroll left top;
+    font-weight: bold;
+    color: white;
+    padding: 8px;
+    font-size: 11px;
+}
+
+.admin-table td {
+    background: #f7f6f5;
+    border: solid 1px #D9E2E6;
+    padding: 5px;
+}
+
+.admin-table td a:link,
+.admin-table td a:visited,
+#admin-navigation span a:link,
+#admin-navigation span a:visited {
+    font-weight: bold;
+}
+
+.admin-table td a:hover,
+#admin-navigation span a:hover {
+    color: red; 
+}
+
+#admin-navigation {
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding: 10px;
+}
+
+#admin-navigation span {
+    margin-right: 10px; 
+}
+
+#admin-navigation span.current {
+    color: red;
+    font-size: 120%;
+    font-weight: bold;  
+}
+
+/* action VIEW layout */
+
+dl {
+    line-height: 2em;
+    margin: 0em 0em;
+    width: 80%;
+    margin-bottom: 10px;
+}
+.altrow {
+    background: #f9f9f9;
+    border-right: 1px solid #ccc;
+}
+dt {
+    font-weight: bold;
+    padding-left: 4px;
+    vertical-align: top;
+    border-top: 1px solid #999;
+}
+dd {
+    margin-left: 18em;
+    margin-top: -2em;
+    vertical-align: top;
+}
+
+/* @Group COMMON inputs */
+input[type="button"]:hover, 
+input[type="submit"]:hover {
+    background: transparent url(../img/layout/nav.png) repeat-x scroll left 0;
+    cursor: pointer;
+}
+
+input[type="button"], 
+input[type="submit"] {
+    background:transparent url(../img/layout/nav.png) repeat-x scroll left -50px;
+    color:#FFFFFF;
+    cursor:pointer;
+    padding:3px 4px 4px;
+}
+
+input:hover, 
+input:focus, 
+checkbox:hover,
+textarea:hover {
+    background:#E2EBEB none repeat scroll 0 0;
+    border:1px solid #4E6972;
+}
+
+textarea  {
+   font-size: 1.1em;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   border: 1px solid #ABC6DD;
+   background: #F8FAFA;
+}
+
+input {
+    background:#F8FAFA none repeat scroll 0 0;
+    border:1px solid #ABC6DD;
+    font-size:1.1em;
+}
+
+/* action ADD EDIT layout */
+
+.admin-form { 
+    clear: both; 
+    width: 100%; 
+}
+
+.form-left-block {
+    width: 70%;
+    float: left;
+    display: block;
+}
+
+.form-right-block {
+    width: 25%;
+    float: right;
+    display: block; 
+}
+
+.input {
+    clear: both;
+}
+
+.input label,
+.input input,
+.input textarea {
+    padding: 2px;
+    width: 55%;
+    display: block;
+    margin-top: 5px;
+}
+
+.input label {
+    float: left;    
+}
+
+.input select {
+    margin-top: 5px;    
+}
+
+.input label {
+    width: 25%;
+    text-align: right;
+    padding-right: 40px;
+    font-size: 120%;    
+}
+
+.input checkbox {
+    display: inline;
+    font-size: 120%;
+}
+/* SHORTEN FORM BLOCK */
+.form-left-block .shorten {
+    position: relative;
+}
+
+.shorten .input input {
+    width: 30%; 
+}
+
+#preview-column {
+    position: absolute;
+    right: 0;
+    text-align: left;
+    top: 15px;
+    width: 31%; 
+}
+
+input[type="hidden"] {
+    display: none;
+}
+
+.checkbox input {
+    border: 0;
+    width: auto;    
+}
+
+.form-left-block .required {
+    font-weight: bold;
+}
+
+.admin-form form div.submit,
+.admin-login-form div.submit {
+    clear: both;
+    width: 40%;
+    text-align: right;
+    padding: 25px 0;    
+}
+
+.submit input[type="button"],
+.submit input[type="submit"] {
+    width: 130px;
+    font-weight: bold;
+}
+
+.error input { border: solid 1px red; }
+.error label { color: #FF0000; }
+.input .error-message {
+    margin: 2px 150px 5px;
+    clear: both;
+    float: right;
+    display: block;
+    color: #900;
+    font-weight: bold;
+}
+
+.shorten .input .error-message {
+    margin: 2px 35% 5px;
+    float: right;
+}
+
+/* Other */
+
+div.disabled {
+    display: none;
+    float: none;
+    clear: none;
+}
+
+/* Admin Login form */
+
+.admin-login-form {
+    float: right;
+    width: 60%; 
+}
+
+.admin-login-form .error-message {
+    margin: 2px 50px 5px;
+}
+
+/* Admin menu */
+
+#menu-container ul li.menu-link {
+    list-style: none;
+    margin-left: 15px;
+}
+
+#menu-container ul li.menu-link a {
+    height: 25px;
+    font-weight: bold;
+    display: block;
+}
+
+#menu-container ul li.active a,
+#menu-container ul li.menu-link a:hover {
+    color: red;
+}

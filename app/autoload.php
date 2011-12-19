@@ -18,7 +18,10 @@ $loader->registerNamespaces(array(
     'Knp\Menu'         => __DIR__.'/../vendor/KnpMenu/src',
     'Knp\\Component'   => __DIR__.'/../vendor/knp-components/src',
     'Stof'             => __DIR__.'/../vendor/bundles',
-    'Gedmo'            => __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
+    'Gedmo'            => array(
+        __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
+        __DIR__.'/../src/'
+    ),
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

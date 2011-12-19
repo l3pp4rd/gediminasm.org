@@ -1,0 +1,59 @@
+{% extends "GedmoAdminBundle::layout.html.twig" %}
+
+{% block title %}Articles{% endblock %}
+
+{% block content %}
+<div class="heading"><h1>Items</h1></div>
+
+<div id="admin-actions">
+    <fieldset>
+    <legend>Related Actions</legend>
+    <div class="action-links">
+        <ul>
+            <li><a href="{{ path('admin_article_add') }}">Add Article</a></li>
+        </ul>
+    </div>
+    <div class="action-search"></div>
+    </fieldset>
+</div>
+
+<div id="admin-view-content">
+
+{% if app.session.hasflash('message') %}
+<div id="session-flash-message">{{ app.session.flash('message') }}</div>
+{% endif %}
+
+{% if paginator|length %}
+
+<table class="admin-table">
+<tr>
+    <th>{{ paginator_sort('Id', 'a.id')|raw }}</th>
+    <th>{{ paginator_sort('Title', 'a.title')|raw }}</th>
+    <th>{{ paginator_sort('Created', 'a.created')|raw }}</th>
+    <th>Actions</th>
+</tr>
+
+{% for article in paginator %}
+<tr {% if loop.index is odd %}class="color"{% endif %}>
+    <td>{{ article.getId() }}</td>
+    <td>{{ article.getTitle() }}</td>
+    <td>{{ article.getCreated().format('Y-m-d H:i:s') }}</td>
+    <td class="actions" width="15%">
+        <a href="{{ path('admin_article_edit', {'id': article.getId()}) }}">Edit</a>
+        <a href="{{ path('admin_article_delete', {'id': article.getId()}) }}" 
+           onclick="return confirm('Are you sure you want to delete {{ article.getTitle() }}?')"
+        >Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<div id="admin-navigation">
+{{ paginator_render(paginator)|raw }}
+</div>
+
+{% else %}
+<div id="empty-records">No records were found</div>
+{% endif %}
+</div>
+{% endblock %}

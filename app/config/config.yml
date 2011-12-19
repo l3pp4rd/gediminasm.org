@@ -23,16 +23,12 @@ twig:
 
 # Assetic Configuration
 assetic:
-    debug:          %kernel.debug%
+    debug: false
     use_controller: false
-    bundles:        [ ]
-    # java: /usr/bin/java
     filters:
         cssrewrite: ~
-        # closure:
-        #     jar: %kernel.root_dir%/java/compiler.jar
-        # yui_css:
-        #     jar: %kernel.root_dir%/java/yuicompressor-2.4.2.jar
+        yui_css: { jar: %kernel.root_dir%/Resources/yui/yuicompressor-2.4.6.jar }
+        yui_js: { jar: %kernel.root_dir%/Resources/yui/yuicompressor-2.4.6.jar }
 
 # Doctrine Configuration
 doctrine:
@@ -48,6 +44,24 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+
+# Doctrine Extension Configuration
+stof_doctrine_extensions:
+    default_locale: %locale%
+    orm:
+        default:
+            tree: true
+            timestampable: true
+            translatable: true
+            sluggable: true
+            loggable: true
+
+# Knp Menu Configuration
+knp_menu:
+    twig: ~
+        #template: knp_menu.html.twig
+    templating: true # if true, enables the helper for PHP templates
+    default_renderer: twig # The renderer to use, list is also available by default
 
 # Swiftmailer Configuration
 #swiftmailer:

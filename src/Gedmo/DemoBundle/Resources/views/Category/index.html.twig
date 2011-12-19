@@ -1,0 +1,45 @@
+{% extends "GedmoTestExtensionsBundle::sub_layout.html.twig" %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="actions">
+    <ul>
+        <li>All test data is reseted every 2 days</li>
+        <li><a href="{{ path('test_category_tree') }}">Show Tree</a></li>
+        <li><a href="{{ path('test_category_add') }}">Add Category</a></li>
+        <li><a href="{{ path('test_language_add') }}">Add Language</a></li>
+    </ul>
+</div>
+
+<table class="table">
+<tr>
+    <th>{{ paginator_sort('Title', 'c.title')|raw }}</th>
+    <th>{{ paginator_sort('Description', 'c.description')|raw }}</th>
+    <th>{{ paginator_sort('Slug', 'c.slug')|raw }}</th>
+    <th>{{ paginator_sort('Updated', 'c.updated')|raw }}</th>
+    <th>Actions</th>
+</tr>
+
+{% for category in paginator %}
+<tr class="{% if loop.index is odd %}row-a{% else %}row-b{% endif %}">
+    <td class="first">{{ category.getTitle }}</td>
+    <td>{{ category.getDescription }}</td>
+    <td>{{ category.getSlug }}</td>
+    <td>{{ category.getUpdated|date('Y-m-d H:i:s') }}</td>
+    <td class="actions" width="15%">
+        <a href="{{ path('test_category_edit', {'id': category.getId}) }}">Edit</a>
+        <a href="{{ path('test_category_show', {'slug': category.getSlug}) }}">Show</a>
+        <a href="{{ path('test_category_delete', {'id': category.getId}) }}" 
+           onclick="return confirm('Are you sure you want to delete {{ category.getTitle }} ?');"
+        >Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<div id="page-navigation">
+    {{ paginator_render(paginator)|raw }}
+</div>
+
+{% endblock %}

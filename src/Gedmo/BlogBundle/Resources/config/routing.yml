@@ -1,0 +1,11 @@
+_blog_article:
+    resource: @GedmoBlogBundle/Controller/ArticleController.php
+    type:     annotation
+    
+_blog_contact:
+    resource: @GedmoBlogBundle/Controller/ContactController.php
+    type:     annotation
+    
+_blog_about:
+    resource: @GedmoBlogBundle/Controller/AboutController.php
+    type:     annotation

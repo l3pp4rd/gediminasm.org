@@ -1,0 +1,55 @@
+{% extends "GedmoAdminBundle::layout.html.twig" %}
+
+{% block title %}Add / Article{% endblock %}
+
+{% block content %}
+<div class="heading"><h1>Article Add</h1></div>
+
+<div id="admin-actions">
+    <fieldset>
+    <legend>Related Actions</legend>
+    <div class="action-links">
+        <ul>
+            <li><a href="{{ path('admin_articles') }}">List Articles</a></li>
+        </ul>
+    </div>
+    <div class="action-search"></div>
+    </fieldset>
+</div>
+
+<div id="admin-view-content" class="admin-form">
+<fieldset id="fieldset-edit">
+    <legend>Edit Item</legend>
+    <form action="{{ path('admin_article_add') }}" {{ form_enctype(form) }} method="post">
+        <div class="input text required">
+            {{ form_label(form.id) }}
+            {{ form_field(form.id) }}
+        </div>
+        <div class="input text required">
+            {{ form_label(form.title) }}
+            {{ form_field(form.title) }}
+        </div>
+        <div class="input text required">
+            {{ form_label(form.metaKeys) }}
+            {{ form_field(form.metaKeys) }}
+        </div>
+        <div class="input text required">
+            {{ form_label(form.metaDescription) }}
+            {{ form_field(form.metaDescription) }}
+        </div>
+        <div class="input text required">
+            {{ form_label(form.header) }}
+            {{ form_field(form.header) }}
+        </div>
+        <div class="input text required">
+            {{ form_label(form.content) }}
+            {{ form_field(form.content) }}
+        </div>
+        {{ form_hidden(form) }}
+        <div class="input submit">
+            <input type="submit" class="button" value="Submit">
+        </div>
+    </form>
+</fieldset>
+</div>
+{% endblock %}

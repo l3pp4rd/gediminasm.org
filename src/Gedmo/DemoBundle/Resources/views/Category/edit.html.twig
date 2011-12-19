@@ -1,0 +1,25 @@
+{% extends "GedmoTestExtensionsBundle::sub_layout.html.twig" %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="actions">
+    <ul>
+        <li><a href="{{ path('test_category_tree') }}">Show Tree</a></li>
+        <li><a href="{{ path('test_category_list') }}">Category List</a></li>
+    </ul>
+</div>
+
+{% form_theme form "GedmoTestExtensionsBundle:themes:standard.html.twig" %}
+
+<form action="{{ path('test_category_edit', {'id': form.data.id}) }}" {{ form_enctype(form) }} method="post">
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.parent) }}
+    {{ form_hidden(form) }}
+    <div class="submit">
+        <input type="submit" class="button" value="Save" />
+    </div>
+</form>
+
+{% endblock %}
