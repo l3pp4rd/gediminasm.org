@@ -2,11 +2,12 @@
 
 namespace Gedmo\BlogBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    Gedmo\BlogBundle\Model\ContactMessage,
-    Gedmo\BlogBundle\Form\Contact as ContactForm;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Gedmo\BlogBundle\Entity\EmailMessage;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
@@ -16,32 +17,41 @@ class ContactController extends Controller
      */
     public function indexAction()
     {
-        $message = new ContactMessage();
-
-        $form = ContactForm::create($this->get('form.context'), 'contact');
-
-        if ('POST' === $this->get('request')->getMethod()) {
-            $form->bind($this->get('request'), $message);
-            if ($form->isValid()) {
-                $this->sendMessage($message);
-            } else {
-                //
-            }
-        }
-
-        return compact('form');
+        return array();
     }
 
-    private function sendMessage(ContactMessage $message)
+    /**
+     * @Route("/contact/send", name="blog_contact_send")
+     * @Method("POST")
+     */
+    public function sendAction()
     {
-        $mailer = $this->get('mailer');
-        $email = \Swift_Message::newInstance()
-            ->setSubject('Blog message')
-            ->setCharset('utf-8')
-            ->setReplyTo(array($message->getEmail() => $message->getSender()))
-            ->setSender($message->getEmail(), $message->getSender())
-            ->setTo(array('gediminas.morkevicius@gmail.com' => 'Gediminas'))
-            ->setBody($this->renderView('GedmoBlogBundle:Contact:email.html.twig', compact('message')));
-        return (bool)$mailer->send($email);
+        if ($this->get('request')->isXmlHttpRequest()) {
+            $params = $this->get('request')->get('message');
+
+            $message = new EmailMessage;
+            $message->setBody($this->renderView(
+                'GedmoBlogBundle:Contact:email.html.twig',
+                compact('params')
+            ));
+            $message->setSender($params['sender']);
+            $message->setEmail($params['email']);
+            // internal
+            $message->setTarget('gediminas.morkevicius@gmail.com');
+            $message->setSubject('[blog] Personal Message');
+            $message->setStatus('pending');
+
+            $violations = $this->get('validator')->validate($message);
+            if (0 !== $violations->count()) {
+                throw new \RuntimeException("Invalid call context");
+            }
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($message);
+            $em->flush();
+            // send
+            return new Response(json_encode($params));
+        }
+        throw new \BadFunctionCallException('Invalid call context');
     }
 }

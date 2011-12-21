@@ -69,7 +69,6 @@ ____SQL;
     {
         if ($this->get('request')->isXmlHttpRequest()) {
             $params = $this->get('request')->get('comment');
-            $em = $this->get('doctrine.orm.entity_manager');
 
             $comment = new Comment;
             $comment->setArticle($em->getReference(

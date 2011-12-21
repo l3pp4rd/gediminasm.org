@@ -3,39 +3,51 @@
 {% block title %}Contact{% endblock %}
 {% block robots %}noindex, nofollow{% endblock %}
 
-{% block assets %}
-    <link href="{{ asset('bundles/gedmoblog/css/contact/index.css') }}" media="screen" rel="stylesheet" type="text/css" />
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function () {
+    blog.onContactReady();
+});
+</script>
 {% endblock %}
 
 {% block content %}
 <h1>Contact Me</h1>
     
-<ul>
-   <li>Email: gediminas.morkevicius@gmail.com</li>
-   <li>Skype: sektor.22</li>
-</ul>
+    <ul>
+       <li>Email: gediminas.morkevicius@gmail.com</li>
+       <li>Skype: sektor.22</li>
+    </ul>
+    
+    <!-- flash msg -->
+    <div class="alert-message" style="display:none">
+      <p>msg</p>
+    </div>
 
-<div id="feedback_form">
-    <form id="contact_form" action="{{ path('blog_contact') }}" {{ form_enctype(form) }} method="post">
-        <div class="input text required">
-            {{ form_label(form.sender) }}
-            <div class="error-message">{{ form_errors(form.sender) }}</div>
-            {{ form_field(form.sender) }}
-            </div>
-        <div class="input text required">
-            {{ form_label(form.email) }}
-            <div class="error-message">{{ form_errors(form.email) }}</div>
-            {{ form_field(form.email) }}
+    <div class="row">
+    <form name="contact" id="contact-form">
+      <fieldset>
+      <legend>Send me a message</legend>
+      <div class="clearfix">
+        <div class="input">
+          <input type="text" class="xlarge" placeholder="Sender" value="" name="message[sender]"/>
         </div>
-        <div class="input textarea required">
-            {{ form_label(form.message) }}
-            <div class="error-message">{{ form_errors(form.message) }}</div>
-            {{ form_field(form.message) }}
+      </div>
+      <div class="clearfix">
+        <div class="input">
+          <input type="text" class="xlarge" value="" placeholder="Email" name="message[email]"/>
         </div>
-        {{ form_hidden(form) }}
-        <div class="input submit">
-            <input type="submit" class="button" value="Submit" id="comment-submit">
+      </div>
+      <div class="clearfix">
+        <div class="input">
+          <textarea class="xlarge" name="message[content]" placeholder="Message"></textarea>
         </div>
+      </div>
+      
+      <div class="actions">
+        <button class="btn primary" type="submit">Send</button>
+      </div>
+      </fieldset>
     </form>
-</div>
+  </div>
 {% endblock %}

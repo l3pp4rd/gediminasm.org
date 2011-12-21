@@ -96,6 +96,76 @@ blog.submitComment = function () {
     });
 };
 
+blog.submitMessage = function () {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/contact/send',
+        data: $('#contact-form :input'),
+        success: function(msg) {
+            var flash = $('div.alert-message');
+            if (msg.error !== undefined) {
+                flash
+                    .removeClass('success')
+                    .addClass('error')
+                    .find('p')
+                    .html('Failed to send an email: '+msg.error)
+                ;
+            } else {
+                flash
+                    .addClass('success')
+                    .removeClass('error')
+                    .find('p')
+                    .html('Email was sent from: ' + msg.email)
+                ;
+                $('#contact-form div.input :input')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .removeAttr('checked')
+                    .removeAttr('selected')
+                ;
+            }
+            flash.show();
+        }
+    });
+};
+
+blog.onContactReady = function() {
+    $('#contact-form button[type=submit]').click(function () {
+        var validation = {
+            message: {
+                sender: {
+                    'Field cannot be empty': /.+/
+                },
+                email: {
+                    'Email must be entered': /.+/,
+                    'Email is invalid': /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+                },
+                content: {
+                    'Message cannot be empty': /.+/
+                }
+            }
+        };
+        var onError = function(input, errors) {
+            $('<span class="help-inline">')
+                .append(errors.shift())
+                .insertAfter($(input));
+            ;
+            $(input).parent().parent().addClass('error');
+        };
+        // clear all errors
+        $('#contact-form div.error').each(function () {
+            $(this)
+                .removeClass('error')
+                .find('span.help-inline')
+                .remove()
+            ;
+        });
+        blog.validate('#contact-form', validation, onError, blog.submitMessage);
+        return false;
+    });
+};
+
 blog.onArticleViewReady = function() {
     blog.loadComments(0, parseInt($('h1').attr('id')));
     $('a#show-more-comments').click(function () {
