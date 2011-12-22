@@ -83,10 +83,25 @@ ____SQL;
             if (0 !== $violations->count()) {
                 throw new \RuntimeException("Invalid call context");
             }
+            $message = new EmailMessage;
+            $message->setBody($this->renderView(
+                'GedmoBlogBundle:Emails:comment.html.twig',
+                compact('params')
+            ));
+            $message->setSender($params['author']);
+            $message->setEmail('gediminas.morkevicius@gmail.com');
+            // internal
+            $message->setTarget('gediminas.morkevicius@gmail.com');
+            $message->setSubject('[blog] Comment was added');
+            $message->setStatus('pending');
+
             $em = $this->get('doctrine.orm.entity_manager');
+            if ($params['author'] != 'Gediminas') {
+                $em->persist($message);
+            }
             $em->persist($comment);
             $em->flush();
-            return new Response(json_encode($this->get('request')->get('comment')));
+            return new Response(json_encode($params));
         }
         throw new \BadFunctionCallException('Invalid call context');
     }
