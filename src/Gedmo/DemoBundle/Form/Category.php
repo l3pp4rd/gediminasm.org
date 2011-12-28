@@ -1,10 +1,10 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle\Form;
+namespace Gedmo\DemoBundle\Form;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextareaField;
-use Gedmo\TestExtensionsBundle\Form\Transformer\Choise;
+use Gedmo\DemoBundle\Form\Transformer\Choise;
 use Symfony\Component\Form\ChoiceField;
 
 class Category extends Form
@@ -13,7 +13,7 @@ class Category extends Form
     {
         $this->addRequiredOption('repo');
         
-        $this->setDataClass('Gedmo\\TestExtensionsBundle\\Entity\\Category');
+        $this->setDataClass('Gedmo\\DemoBundle\\Entity\\Category');
         $this->add('title');
         $this->add(new TextareaField('description'));
         

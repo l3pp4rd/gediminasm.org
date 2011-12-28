@@ -1,11 +1,10 @@
 <?php
-namespace Gedmo\TestExtensionsBundle\Controller;
+namespace Gedmo\DemoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Zend\Paginator\Paginator;
-use Gedmo\TestExtensionsBundle\Entity\Category;
+use Gedmo\DemoBundle\Entity\Category;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Gedmo\TestExtensionsBundle\Form\Category as CategoryForm;
+use Gedmo\DemoBundle\Form\Category as CategoryForm;
 
 class CategoryController extends Controller
 {
@@ -17,7 +16,7 @@ class CategoryController extends Controller
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $dql = "SELECT c FROM GedmoTestExtensionsBundle:Category c";
+        $dql = "SELECT c FROM GedmoDemoBundle:Category c";
         $dql .= " ORDER BY c.lft ASC";
 
         $q = $em->createQuery($dql);
@@ -41,7 +40,7 @@ class CategoryController extends Controller
     public function treeAction()
     {
         $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\TestExtensionsBundle\Entity\Category');
+            ->getRepository('Gedmo\DemoBundle\Entity\Category');
 
         $rootNodes = $repo->getRoodNodes();
         $tree = $this->buildTree($rootNodes, $repo);
@@ -52,13 +51,13 @@ class CategoryController extends Controller
 
     /**
      * @extra:Route("/revisions/{id}", name="test_category_log")
-     * @extra:ParamConverter("node", class="GedmoTestExtensionsBundle:Category")
+     * @extra:ParamConverter("node", class="GedmoDemoBundle:Category")
      * @extra:Template()
      */
     public function revisionsAction($node)
     {
         $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\TestExtensionsBundle\Entity\Category');
+            ->getRepository('Gedmo\DemoBundle\Entity\Category');
 
         $query = $repo->getRevisionListQuery($node);
         $adapter = $this->get('knplabs_paginator.adapter');
@@ -75,12 +74,12 @@ class CategoryController extends Controller
 
     /**
      * @extra:Route("/reorder/{direction}/{id}", name="test_category_reorder")
-     * @extra:ParamConverter("root", class="GedmoTestExtensionsBundle:Category")
+     * @extra:ParamConverter("root", class="GedmoDemoBundle:Category")
      */
     public function reorderAction(Category $root, $direction)
     {
         $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\TestExtensionsBundle\Entity\Category');
+            ->getRepository('Gedmo\DemoBundle\Entity\Category');
         $direction = in_array($direction, array('asc', 'desc')) ? $direction : 'asc';
         $repo->reorder($root, 'title', $direction);
         return new RedirectResponse($this->generateUrl('test_category_tree'));
@@ -88,12 +87,12 @@ class CategoryController extends Controller
 
     /**
      * @extra:Route("/move/{id}/{direction}", name="test_category_move")
-     * @extra:ParamConverter("node", class="GedmoTestExtensionsBundle:Category")
+     * @extra:ParamConverter("node", class="GedmoDemoBundle:Category")
      */
     public function moveAction(Category $node, $direction)
     {
         $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\TestExtensionsBundle\Entity\Category');
+            ->getRepository('Gedmo\DemoBundle\Entity\Category');
 
         $function = $direction == 'up' ? 'moveUp' : 'moveDown';
         $repo->{$function}($node);
@@ -111,10 +110,10 @@ class CategoryController extends Controller
         $category = $translationRepo->findObjectByTranslatedField(
             'slug',
             $slug,
-            'Gedmo\TestExtensionsBundle\Entity\Category'
+            'Gedmo\DemoBundle\Entity\Category'
         );
         $translations = $translationRepo->findTranslations($category);
-        $path = $em->getRepository('Gedmo\TestExtensionsBundle\Entity\Category')
+        $path = $em->getRepository('Gedmo\DemoBundle\Entity\Category')
             ->getPath($category);
 
         return compact('category', 'translations', 'path');
@@ -122,7 +121,7 @@ class CategoryController extends Controller
 
     /**
      * @extra:Route("/delete/{id}", name="test_category_delete")
-     * @extra:ParamConverter("node", class="GedmoTestExtensionsBundle:Category")
+     * @extra:ParamConverter("node", class="GedmoDemoBundle:Category")
      */
     public function deleteAction(Category $node)
     {
@@ -136,13 +135,13 @@ class CategoryController extends Controller
 
     /**
      * @extra:Route("/edit/{id}", name="test_category_edit")
-     * @extra:ParamConverter("node", class="GedmoTestExtensionsBundle:Category")
+     * @extra:ParamConverter("node", class="GedmoDemoBundle:Category")
      * @extra:Template()
      */
     public function editAction(Category $node)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $repo = $em->getRepository('Gedmo\\TestExtensionsBundle\\Entity\\Category');
+        $repo = $em->getRepository('Gedmo\\DemoBundle\\Entity\\Category');
         $form = CategoryForm::create($this->get('form.context'), 'category');
         $form->bind($this->get('request'), $node);
         $form->add(
@@ -167,12 +166,12 @@ class CategoryController extends Controller
 
     /**
      * @extra:Route("/add", name="test_category_add")
-     * @extra:Template("GedmoTestExtensionsBundle:Category:add.html.twig", vars={"form"})
+     * @extra:Template("GedmoDemoBundle:Category:add.html.twig", vars={"form"})
      */
     public function addAction()
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $repo = $em->getRepository('Gedmo\\TestExtensionsBundle\\Entity\\Category');
+        $repo = $em->getRepository('Gedmo\\DemoBundle\\Entity\\Category');
         $category = new Category;
 
         $form = CategoryForm::create($this->get('form.context'), 'category', array('repo' => $repo));
@@ -192,7 +191,7 @@ class CategoryController extends Controller
     private function getLanguages()
     {
         return $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\TestExtensionsBundle\Entity\Language')
+            ->getRepository('Gedmo\DemoBundle\Entity\Language')
             ->findAll();
     }
 

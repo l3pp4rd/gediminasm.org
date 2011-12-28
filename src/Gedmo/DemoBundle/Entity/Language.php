@@ -1,9 +1,9 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle\Entity;
+namespace Gedmo\DemoBundle\Entity;
 
 /**
- * @orm:Table(name="test_extensions_languages")
+ * @orm:Table(name="demo_languages")
  * @orm:Entity
  */
 class Language

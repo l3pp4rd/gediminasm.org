@@ -1,6 +1,6 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle;
+namespace Gedmo\DemoBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

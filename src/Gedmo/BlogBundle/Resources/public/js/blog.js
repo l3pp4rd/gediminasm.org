@@ -10,8 +10,10 @@ blog.loadComments = function(offset, articleId) {
             $('div#comments').append(entry);
             numAdded++;
         });
-        numAdded = numAdded ? offset + numAdded : 0;
-        $('div#comments').data('offset', numAdded);
+        $('div#comments').data('offset', offset + numAdded);
+        if (offset + numAdded === $('div#comments').data('count')) {
+            $('a#show-more-comments').remove();
+        }
     }, 'json');
 };
 
@@ -84,6 +86,7 @@ blog.submitComment = function () {
         success: function(comment) {
             if (comment) {
                 var entry = blog.createComment(0, comment);
+                $('#comments-header').show();
                 $('div#comments').prepend(entry);
                 $('#comment-form div.input :input')
                     .not(':button, :submit, :reset, :hidden')
@@ -167,17 +170,24 @@ blog.onContactReady = function() {
 };
 
 blog.onArticleViewReady = function() {
-    blog.loadComments(0, parseInt($('h1').attr('id')));
+    var count = parseInt($('div#comment-count').text());
+    $('div#comments').data('count', count);
+    var load = function() {
+        blog.loadComments(
+            $('div#comments').data('offset'),
+            parseInt($('h1').attr('id'))
+        );
+    };
+    if (isNaN(count) || count == 0) {
+        $('a#show-more-comments').remove();
+        $('#comments-header').hide();
+    } else {
+        $('div#comments').data('offset', 0);
+        load();
+    }
+    
     $('a#show-more-comments').click(function () {
-        var offset = parseInt($('div#comments').data('offset'));
-        if (offset === 0) {
-            $('a#show-more-comments').remove();
-        } else {
-            blog.loadComments(
-                $('div#comments').data('offset'),
-                parseInt($('h1').attr('id'))
-            );
-        }
+        load();
         return false;
     });
     $('#comment-form button[type=submit]').click(function () {

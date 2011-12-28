@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             new Gedmo\BlogBundle\GedmoBlogBundle(),
+            new Gedmo\DemoBundle\GedmoDemoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

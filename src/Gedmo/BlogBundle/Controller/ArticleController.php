@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Gedmo\BlogBundle\Entity\Article;
 use Gedmo\BlogBundle\Entity\Comment;
+use Gedmo\BlogBundle\Entity\EmailMessage;
 
 class ArticleController extends Controller
 {
@@ -48,7 +49,10 @@ ____SQL;
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = <<<____SQL
-            SELECT a
+            SELECT a, (SELECT COUNT(c)
+              FROM GedmoBlogBundle:Comment c
+              WHERE c.article = a
+            ) AS num_comments
             FROM GedmoBlogBundle:Article a
             WHERE a.slug = :slug
 ____SQL;
@@ -57,8 +61,13 @@ ____SQL;
         $q->setMaxResults(1);
         $q->setParameters(compact('slug'));
         $article = $q->getSingleResult();
+        if (!$article) {
+            throw new \RuntimeException("Article was not found by {$slug}");
+        }
+        $countComments = intval($article['num_comments']);
+        $article = $article[0];
 
-        return compact('article');
+        return compact('article', 'countComments');
     }
 
     /**
@@ -70,6 +79,7 @@ ____SQL;
         if ($this->get('request')->isXmlHttpRequest()) {
             $params = $this->get('request')->get('comment');
 
+            $em = $this->get('doctrine.orm.entity_manager');
             $comment = new Comment;
             $comment->setArticle($em->getReference(
                 'Gedmo\BlogBundle\Entity\Article',
@@ -95,7 +105,6 @@ ____SQL;
             $message->setSubject('[blog] Comment was added');
             $message->setStatus('pending');
 
-            $em = $this->get('doctrine.orm.entity_manager');
             if ($params['author'] != 'Gediminas') {
                 $em->persist($message);
             }

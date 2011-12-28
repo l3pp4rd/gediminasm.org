@@ -1,6 +1,6 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle\Form\Transformer;
+namespace Gedmo\DemoBundle\Form\Transformer;
 
 use Symfony\Component\Form\ValueTransformer\ValueTransformerInterface;
 use Doctrine\ORM\EntityRepository;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle\Entity\Repository;
+namespace Gedmo\DemoBundle\Entity\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 

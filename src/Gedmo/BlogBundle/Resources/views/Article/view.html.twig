@@ -47,8 +47,9 @@ $(document).ready(function () {
     </form>
   </div>
   
-  <h2>Comments</h2>
+  <h2 id="comments-header">Comments</h2>
   
+  <div id="comment-count" style="display:none">{{ countComments }}</div>
   <div class="row" id="comments"></div>
   <a href="#" id="show-more-comments">Show more</a>
 {% endblock %}

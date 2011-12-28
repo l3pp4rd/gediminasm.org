@@ -1,6 +1,6 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle\DependencyInjection;
+namespace Gedmo\DemoBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;

@@ -1,10 +1,10 @@
 <?php
-namespace Gedmo\TestExtensionsBundle\Controller;
+namespace Gedmo\DemoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Gedmo\TestExtensionsBundle\Entity\Language;
+use Gedmo\DemoBundle\Entity\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Gedmo\TestExtensionsBundle\Form\Language as LanguageForm;
+use Gedmo\DemoBundle\Form\Language as LanguageForm;
 
 class LanguageController extends Controller
 {

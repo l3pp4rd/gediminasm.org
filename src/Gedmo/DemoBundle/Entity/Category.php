@@ -1,13 +1,13 @@
 <?php
-namespace Gedmo\TestExtensionsBundle\Entity;
+namespace Gedmo\DemoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @gedmo:Loggable
  * @gedmo:Tree(type="nested")
- * @orm:Table(name="test_extensions_categories")
- * @orm:Entity(repositoryClass="Gedmo\TestExtensionsBundle\Entity\Repository\CategoryRepository")
+ * @orm:Table(name="demo_categories")
+ * @orm:Entity(repositoryClass="Gedmo\DemoBundle\Entity\Repository\CategoryRepository")
  */
 class Category
 {
@@ -26,19 +26,19 @@ class Category
      * @orm:Column(length=64)
      */
     private $title;
-    
+
     /**
      * @gedmo:TreeLeft
      * @orm:Column(type="integer")
      */
     private $lft;
-    
+
     /**
      * @gedmo:TreeRight
      * @orm:Column(type="integer")
      */
     private $rgt;
-     
+
     /**
      * @gedmo:TreeParent
      * @orm:ManyToOne(targetEntity="Category", inversedBy="children")
@@ -47,19 +47,19 @@ class Category
      * })
      */
     private $parent;
-    
+
     /**
      * @gedmo:TreeRoot
      * @orm:Column(type="integer", nullable=true)
      */
     private $root;
-     
+
     /**
      * @gedmo:TreeLevel
      * @orm:Column(name="lvl", type="integer")
      */
     private $level;
-    
+
     /**
      * @orm:OneToMany(targetEntity="Category", mappedBy="parent")
      */
@@ -70,7 +70,7 @@ class Category
      * @orm:Column(type="text", nullable=true)
      */
     private $description;
-    
+
     /**
      * @var datetime $created
      *
@@ -86,13 +86,13 @@ class Category
      * @orm:Column(type="datetime")
      */
     private $updated;
-    
+
     /**
      * Used locale to override Translation listener`s locale
      * @gedmo:Locale
      */
     private $locale;
-    
+
     /**
      * @gedmo:Translatable
      * @gedmo:Slug
@@ -104,12 +104,12 @@ class Category
     {
         $this->children = new ArrayCollection();
     }
-    
+
     public function getId()
     {
         return $this->id;
     }
-    
+
     public function setTitle($title)
     {
         $this->title = $title;
@@ -129,27 +129,27 @@ class Category
     {
         return $this->description;
     }
-    
+
     public function setParent($parent)
     {
         $this->parent = $parent;
     }
-     
+
     public function getParent()
     {
-        return $this->parent;   
+        return $this->parent;
     }
-    
+
     public function getRoot()
     {
-        return $this->root;    
+        return $this->root;
     }
-    
+
     public function getLevel()
     {
         return $this->level;
     }
-    
+
     /**
      * Get children
      *
@@ -159,27 +159,27 @@ class Category
     {
         return $this->children;
     }
-    
+
     public function getSlug()
     {
         return $this->slug;
     }
-    
+
     public function getLeft()
     {
         return $this->lft;
     }
-    
+
     public function getRight()
     {
         return $this->rgt;
     }
-    
+
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
     }
-    
+
     /**
      * Get created
      *
@@ -189,7 +189,7 @@ class Category
     {
         return $this->created;
     }
-    
+
     /**
      * Get updated
      *
@@ -199,7 +199,7 @@ class Category
     {
         return $this->updated;
     }
-    
+
     public function __toString()
     {
         return $this->getTitle();

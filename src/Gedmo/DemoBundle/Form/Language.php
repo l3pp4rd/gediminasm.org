@@ -1,6 +1,6 @@
 <?php
 
-namespace Gedmo\TestExtensionsBundle\Form;
+namespace Gedmo\DemoBundle\Form;
 
 use Symfony\Component\Form\Form;
 
@@ -8,7 +8,7 @@ class Language extends Form
 {
     protected function configure()
     {
-        $this->setDataClass('Gedmo\\TestExtensionsBundle\\Entity\\Language');
+        $this->setDataClass('Gedmo\\DemoBundle\\Entity\\Language');
         $this->add('title');
     }
 }

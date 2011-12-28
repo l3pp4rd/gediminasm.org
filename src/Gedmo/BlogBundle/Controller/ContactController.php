@@ -31,7 +31,7 @@ class ContactController extends Controller
 
             $message = new EmailMessage;
             $message->setBody($this->renderView(
-                'GedmoBlogBundle:Contact:email.html.twig',
+                'GedmoBlogBundle:Emails:contact.html.twig',
                 compact('params')
             ));
             $message->setSender($params['sender']);
