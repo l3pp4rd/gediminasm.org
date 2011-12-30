@@ -1,0 +1,27 @@
+div.action-list {
+    background: none repeat scroll 0 0 #F5F5F5;
+    border-radius: 0 0 3px 3px;
+    border-top: 1px solid #DDDDDD;
+    padding: 10px 10px 0px 50px;
+    margin-bottom: 15px;
+}
+
+div.languages {
+    float: right;	
+}
+
+div.languages ul li {
+    display: inline;
+    list-style-type: none;
+    padding-left: 7px;	
+}
+
+div.languages ul li.active a {
+    color: blue;
+    font-weight: bold;
+}
+
+div.languages ul li a:hover {
+    color: red;
+}
+

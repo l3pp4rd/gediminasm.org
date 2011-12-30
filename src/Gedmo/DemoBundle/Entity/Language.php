@@ -2,36 +2,33 @@
 
 namespace Gedmo\DemoBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @orm:Table(name="demo_languages")
- * @orm:Entity
+ * @ORM\Table(name="demo_languages")
+ * @ORM\Entity
  */
 class Language
 {
     /**
-     * @var integer $id
-     *
-     * @orm:Column(type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
      */
     private $id;
 
     /**
-     * @var string $title
-     *
-     * @validation:NotBlank()
-     * @validation:MaxLength(16)
-     * @gedmo:Sluggable
-     * @orm:Column(length=16)
+     * @Assert\NotBlank(message="Language title must be set")
+     * @Assert\MaxLength(limit=8, message="Language length exceeded")
+     * @ORM\Column(length=8)
      */
     private $title;
 
     /**
-     * @var string $language
-     *
-     * @gedmo:Slug(separator="_")
-     * @orm:Column(length=16)
+     * @Gedmo\Slug(fields={"title"}, separator="_")
+     * @ORM\Column(length=8)
      */
     private $language;
 

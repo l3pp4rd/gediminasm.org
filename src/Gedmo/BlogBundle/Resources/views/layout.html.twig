@@ -17,15 +17,16 @@
   <meta name="keywords" content="blog, gediminas, morkevicius, php5, doctrine2, behavioral, extensions" />
   <meta name="robots" content="{% block robots %}index, follow, all{% endblock %}" />
   
+  {% block styles %}
   {% stylesheets
     '@GedmoBlogBundle/Resources/public/css/twitter.css'
     '@GedmoBlogBundle/Resources/public/css/style.css'
+    '@GedmoDemoBundle/Resources/public/css/demo.css'
         
       output='css/blog.css'
   %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="all"/>
   {% endstylesheets %}
-  {% block styles %}
   {% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
@@ -46,6 +47,7 @@
     </footer>
   </div>
 
+  {% block scripts %}
   {% javascripts
     '@GedmoBlogBundle/Resources/public/js/lib/jquery.js'
     '@GedmoBlogBundle/Resources/public/js/blog.js'
@@ -54,7 +56,6 @@
   %}
     <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
-  {% block scripts %}
   {% endblock %}
 </body>
 </html>

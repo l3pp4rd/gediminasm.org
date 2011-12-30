@@ -2,107 +2,106 @@
 namespace Gedmo\DemoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @gedmo:Loggable
- * @gedmo:Tree(type="nested")
- * @orm:Table(name="demo_categories")
- * @orm:Entity(repositoryClass="Gedmo\DemoBundle\Entity\Repository\CategoryRepository")
+ * @Gedmo\Tree(type="nested")
+ * @ORM\Table(name="demo_categories")
+ * @ORM\Entity(repositoryClass="Gedmo\DemoBundle\Entity\Repository\CategoryRepository")
  */
 class Category
 {
     /**
-     * @orm:Column(type="integer")
-     * @orm:Id
-     * @orm:GeneratedValue
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
      */
     private $id;
 
     /**
-     * @validation:NotBlank()
-     * @validation:MaxLength(64)
-     * @gedmo:Translatable
-     * @gedmo:Sluggable
-     * @orm:Column(length=64)
+     * @Gedmo\Translatable
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=64, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @Assert\NotBlank(message="Category title must be set")
+     * @Gedmo\Translatable
+     * @ORM\Column(length=64)
      */
     private $title;
 
     /**
-     * @gedmo:TreeLeft
-     * @orm:Column(type="integer")
+     * @Gedmo\TreeLeft
+     * @ORM\Column(type="integer")
      */
     private $lft;
 
     /**
-     * @gedmo:TreeRight
-     * @orm:Column(type="integer")
+     * @Gedmo\TreeRight
+     * @ORM\Column(type="integer")
      */
     private $rgt;
 
     /**
-     * @gedmo:TreeParent
-     * @orm:ManyToOne(targetEntity="Category", inversedBy="children")
-     * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
-     * })
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $parent;
 
     /**
-     * @gedmo:TreeRoot
-     * @orm:Column(type="integer", nullable=true)
+     * @Gedmo\TreeRoot
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $root;
 
     /**
-     * @gedmo:TreeLevel
-     * @orm:Column(name="lvl", type="integer")
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer")
      */
     private $level;
 
     /**
-     * @orm:OneToMany(targetEntity="Category", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      */
     private $children;
 
     /**
-     * @gedmo:Translatable
-     * @orm:Column(type="text", nullable=true)
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @var datetime $created
-     *
-     * @gedmo:Timestampable(on="create")
-     * @orm:Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @var datetime $updated
-     *
-     * @gedmo:Timestampable(on="update")
-     * @orm:Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
     private $updated;
 
     /**
      * Used locale to override Translation listener`s locale
-     * @gedmo:Locale
+     * @Gedmo\Locale
      */
     private $locale;
 
-    /**
-     * @gedmo:Translatable
-     * @gedmo:Slug
-     * @orm:Column(length=64, unique=true)
-     */
-    private $slug;
-
     public function __construct()
     {
-        $this->children = new ArrayCollection();
+    	$this->children = new ArrayCollection();
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     public function getId()
@@ -130,7 +129,7 @@ class Category
         return $this->description;
     }
 
-    public function setParent($parent)
+	public function setParent($parent)
     {
         $this->parent = $parent;
     }
@@ -150,54 +149,34 @@ class Category
         return $this->level;
     }
 
-    /**
-     * Get children
-     *
-     * @return Doctrine\Common\Collections\Collection $children
-     */
     public function getChildren()
     {
         return $this->children;
     }
 
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
     public function getLeft()
     {
-        return $this->lft;
+    	return $this->lft;
     }
 
-    public function getRight()
+	public function getRight()
     {
         return $this->rgt;
     }
 
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
-    /**
-     * Get created
-     *
-     * @return datetime $created
-     */
     public function getCreated()
     {
         return $this->created;
     }
 
-    /**
-     * Get updated
-     *
-     * @return datetime $updated
-     */
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     public function __toString()

@@ -14,7 +14,7 @@ class TestDataReloadCommand extends DoctrineCommand
     protected function configure()
     {
         parent::configure();
-        $this->setName('test:data:reload')
+        $this->setName('gedmo:demo:reload')
             ->setDescription('Reloads test data.')
             ->setDefinition(array(
                 new InputOption(
@@ -29,7 +29,7 @@ class TestDataReloadCommand extends DoctrineCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $emName = $input->getOption('em');
-        $em = self::getEntityManager($this->container, $emName);
+        $em = $this->getEntityManager($emName);
 
         // deletions
         $conn = $em->getConnection();
@@ -49,8 +49,11 @@ class TestDataReloadCommand extends DoctrineCommand
 
         $em->persist($lang0);
         $em->persist($lang1);
-        $em->flush();
-        $em->clear();
+
+        $translatable = $this->getContainer()->get(
+            'stof_doctrine_extensions.listener.translatable'
+        );
+        $translatable->setTranslatableLocale('en');
 
         $food = new Category;
         $food->setTitle('Food');
@@ -126,38 +129,27 @@ class TestDataReloadCommand extends DoctrineCommand
 
         $em->persist($potatoes);
         $em->flush();
-        $em->clear();
 
-        $repo = $em->getRepository('Gedi\Entity\Category');
+        // de language
+        $translatable->setTranslatableLocale('de');
 
-        $food = $repo->findOneByTitle('Food');
         $food->setTitle('Lebensmittel');
         $food->setDescription('Lebensmittel');
-        $food->setTranslatableLocale('de');
-
         $em->persist($food);
 
-        $cars = $repo->findOneByTitle('Cars');
         $cars->setTitle('Autos');
         $cars->setDescription('Autos');
-        $cars->setTranslatableLocale('de');
-
         $em->persist($cars);
 
-        $vegetables = $repo->findOneByTitle('Vegetables');
         $vegetables->setTitle('Gemüse');
         $vegetables->setDescription('Lebensmittel->Gemüse');
-        $vegetables->setTranslatableLocale('de');
-
         $em->persist($vegetables);
 
-        $carrots = $repo->findOneByTitle('Carrots');
         $carrots->setTitle('Möhren');
         $carrots->setDescription('Lebensmittel->Gemüse->Möhren');
-        $carrots->setTranslatableLocale('de');
-
         $em->persist($carrots);
+
         $em->flush();
-        $em->clear();
+        $output->writeLn('Reload Done..');
     }
 }

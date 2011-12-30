@@ -9,3 +9,7 @@ home:
 
 _blog:
     resource: "@GedmoBlogBundle/Resources/config/routing.yml"
+
+_demo:
+    resource: "@GedmoDemoBundle/Resources/config/routing.yml"
+    prefix: demo

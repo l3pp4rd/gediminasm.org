@@ -1,13 +1,13 @@
 _test_extensions_category:
     resource: @GedmoDemoBundle/Controller/CategoryController.php
     type:     annotation
-    prefix:   test-category
+    prefix:   category
 
 _test_extensions_language:
     resource: @GedmoDemoBundle/Controller/LanguageController.php
     type:     annotation
-    prefix:   test-language
+    prefix:   language
     
 _default_test_index:
-    pattern:  /test
+    pattern:  /
     defaults: { _controller: GedmoDemoBundle:Category:index }
