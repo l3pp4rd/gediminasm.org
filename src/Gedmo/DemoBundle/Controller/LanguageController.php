@@ -5,23 +5,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Gedmo\DemoBundle\Entity\Language;
-use Gedmo\DemoBundle\Form\Language as LanguageForm;
+use Gedmo\DemoBundle\Form\LanguageType;
 
 class LanguageController extends Controller
 {
     /**
-     * @Route("/change/{name}", name="demo_language_change")
-     */
-    public function changeLanguageAction($name)
-    {
-        $this->get('session')->setLocale($name);
-        $this->get('session')->setFlash('message', 'Language was changed');
-        return $this->redirect($this->generateUrl('demo_category_tree'));
-    }
-
-    /**
      * @Route("/add", name="demo_language_add")
-     * @Template()
+     * @Template
      */
     public function addAction()
     {

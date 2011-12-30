@@ -14,7 +14,7 @@ class CategoryController extends Controller
 {
     /**
      * @Route("/", name="demo_category_list")
-     * @Template()
+     * @Template
      */
     public function indexAction()
     {
@@ -25,6 +25,10 @@ class CategoryController extends Controller
             ORDER BY c.lft ASC
 ____SQL;
         $q = $em->createQuery($dql);
+        $q->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
 
         $paginator = $this->get('knp_paginator');
         $categories = $paginator->paginate(
@@ -40,19 +44,20 @@ ____SQL;
 
     /**
      * @Route("/tree", name="demo_category_tree")
-     * @Template()
+     * @Template
      */
     public function treeAction()
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $repo = $em->getRepository('Gedmo\DemoBundle\Entity\Category');
 
+        $self = &$this;
         $options = array(
             'decorate' => true,
-            'nodeDecorator' => function($node) {
-                $linkUp = '<a href="' . $this->generateUrl('demo_category_move_up', array('id' => $node['id'])) . '">Up</a>';
-                $linkDown = '<a href="' . $this->generateUrl('demo_category_move_down', array('id' => $node['id'])) . '">Down</a>';
-                $linkNode = '<a href="' . $this->generateUrl('demo_category_show', array('slug' => $node['slug']))
+            'nodeDecorator' => function($node) use (&$self) {
+                $linkUp = '<a href="' . $self->generateUrl('demo_category_move_up', array('id' => $node['id'])) . '">Up</a>';
+                $linkDown = '<a href="' . $self->generateUrl('demo_category_move_down', array('id' => $node['id'])) . '">Down</a>';
+                $linkNode = '<a href="' . $self->generateUrl('demo_category_show', array('slug' => $node['slug']))
                     . '">' . $node['title'] . '</a>'
                 ;
                 return $linkNode . '&nbsp;&nbsp;&nbsp;' . $linkUp . '&nbsp;' . $linkDown;
@@ -72,31 +77,11 @@ ____SQL;
         $nodes = $query->getArrayResult();
         $tree = $repo->buildTree($nodes, $options);
         $languages = $this->getLanguages();
+        $rootNodes = array_filter($nodes, function ($node) {
+            return $node['level'] === 0;
+        });
 
-        return compact('tree', 'languages', 'nodes');
-    }
-
-    /**
-     * @Route("/revisions/{id}", name="demo_category_log")
-     * @ParamConverter("node", class="GedmoDemoBundle:Category")
-     * @Template()
-     */
-    public function revisionsAction($node)
-    {
-        $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\DemoBundle\Entity\Category');
-
-        $query = $repo->getRevisionListQuery($node);
-        $adapter = $this->get('knplabs_paginator.adapter');
-        $adapter->setQuery($query);
-        $adapter->setDistinct(false);
-
-        $paginator = new Paginator($adapter);
-        $paginator->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $paginator->setItemCountPerPage(5);
-        $paginator->setPageRange(5);
-
-        return compact('paginator', 'node');
+        return compact('tree', 'languages', 'rootNodes');
     }
 
     /**
@@ -106,44 +91,79 @@ ____SQL;
     public function reorderAction(Category $root, $direction)
     {
         $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\DemoBundle\Entity\Category');
-        $direction = in_array($direction, array('asc', 'desc')) ? $direction : 'asc';
+            ->getRepository('Gedmo\DemoBundle\Entity\Category')
+        ;
+        $direction = in_array($direction, array('asc', 'desc'), false) ? $direction : 'asc';
         $repo->reorder($root, 'title', $direction);
-        return $this->redirect($this->generateUrl('test_category_tree'));
+        return $this->redirect($this->generateUrl('demo_category_tree'));
     }
 
     /**
-     * @Route("/move/{id}/{direction}", name="demo_category_move")
+     * @Route("/move-up/{id}", name="demo_category_move_up")
      * @ParamConverter("node", class="GedmoDemoBundle:Category")
      */
-    public function moveAction(Category $node, $direction)
+    public function moveUpAction(Category $node)
     {
         $repo = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('Gedmo\DemoBundle\Entity\Category');
+            ->getRepository('Gedmo\DemoBundle\Entity\Category')
+        ;
 
-        $function = $direction == 'up' ? 'moveUp' : 'moveDown';
-        $repo->{$function}($node);
-        return $this->redirect($this->generateUrl('test_category_tree'));
+        $repo->moveUp($node);
+        return $this->redirect($this->generateUrl('demo_category_tree'));
+    }
+
+    /**
+     * @Route("/move-down/{id}", name="demo_category_move_down")
+     * @ParamConverter("node", class="GedmoDemoBundle:Category")
+     */
+    public function moveDownAction(Category $node)
+    {
+        $repo = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('Gedmo\DemoBundle\Entity\Category')
+        ;
+
+        $repo->moveDown($node);
+        return $this->redirect($this->generateUrl('demo_category_tree'));
     }
 
     /**
      * @Route("/show/{slug}", name="demo_category_show")
-     * @Template()
+     * @Template
      */
     public function showAction($slug)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $translationRepo = $em->getRepository('Stof\DoctrineExtensionsBundle\Entity\Translation');
-        $category = $translationRepo->findObjectByTranslatedField(
-            'slug',
-            $slug,
-            'Gedmo\DemoBundle\Entity\Category'
-        );
-        $translations = $translationRepo->findTranslations($category);
-        $path = $em->getRepository('Gedmo\DemoBundle\Entity\Category')
-            ->getPath($category);
+        $dql = <<<____SQL
+            SELECT c
+            FROM GedmoDemoBundle:Category c
+            WHERE c.slug = :slug
+____SQL;
+        $node = $em
+            ->createQuery($dql)
+            ->setMaxResults(1)
+            ->setParameters(compact('slug'))
+            ->setHint(
+                Query::HINT_CUSTOM_OUTPUT_WALKER,
+                'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+            )
+            ->getSingleResult()
+        ;
 
-        return compact('category', 'translations', 'path');
+        $translationRepo = $em->getRepository(
+            'Stof\DoctrineExtensionsBundle\Entity\Translation'
+        );
+        $translations = $translationRepo->findTranslations($node);
+        $pathQuery = $em
+            ->getRepository('Gedmo\DemoBundle\Entity\Category')
+            ->getPathQuery($node)
+        ;
+        $pathQuery->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+        $path = $pathQuery->getArrayResult();
+
+        return compact('node', 'translations', 'path');
     }
 
     /**
@@ -155,15 +175,15 @@ ____SQL;
         $em = $this->get('doctrine.orm.entity_manager');
         $em->remove($node);
         $em->flush();
-        $this->get('session')->setFlash('message', 'Category was deleted');
+        $this->get('session')->setFlash('message', 'Category '.$node->getTitle().' was removed');
 
-        return new RedirectResponse($this->generateUrl('test_category_tree'));
+        return $this->redirect($this->generateUrl('demo_category_tree'));
     }
 
     /**
      * @Route("/edit/{id}", name="demo_category_edit")
      * @ParamConverter("node", class="GedmoDemoBundle:Category")
-     * @Template()
+     * @Template
      */
     public function editAction(Category $node)
     {
@@ -229,20 +249,5 @@ ____SQL;
             ->getRepository('Gedmo\DemoBundle\Entity\Language')
             ->findAll()
         ;
-    }
-
-    private function buildTree($nodes, $repo) {
-        $result = '<ul>';
-        foreach ($nodes as $node) {
-            $linkUp = '<a href="' . $this->generateUrl('test_category_move', array('id' => $node->getId(), 'direction' => 'up')) . '">Up</a>';
-            $linkDown = '<a href="' . $this->generateUrl('test_category_move', array('id' => $node->getId(), 'direction' => 'down')) . '">Down</a>';
-            $result .= '<li>' . $node->getTitle() . '&nbsp;&nbsp;&nbsp;' . $linkUp . '&nbsp;' . $linkDown;
-            if ($repo->childCount($node, false)) {
-                $result .= $this->buildTree($repo->children($node, true), $repo);
-            }
-            $result .= '</li>';
-        }
-        $result .= '</ul>';
-        return $result;
     }
 }

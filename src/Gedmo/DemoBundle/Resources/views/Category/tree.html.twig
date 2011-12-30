@@ -1,29 +1,41 @@
 {% extends "GedmoDemoBundle::sub_layout.html.twig" %}
 
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('a.tree-reorder-link').click(function(){
+        var id = $("select[name='select-root-category'] option:selected").attr('value');
+        $(this).attr('href', $(this).attr('href')+id);
+        return true;
+    });
+});
+</script>
+{% endblock %}
+
+{% block actions %}
+<ul>
+    <li><a href="{{ path('demo_category_list') }}">List Categories</a></li>
+    <li><a href="{{ path('demo_category_add') }}">Add Category</a></li>
+    <li><a href="{{ path('demo_language_add') }}">Add Language</a></li>
+    {% if rootNodes %}
+    <li>
+        <span>Reorder </span>
+        <select name="select-root-category">
+            {% for node in rootNodes %}
+                <option value="{{ node.id }}">{{ node.title }}</option>
+            {% endfor %}
+        </select>
+        <span> Tree by "Title", direction: </span>
+        <a class="tree-reorder-link" href="/demo/category/reorder/asc/">ASC</a>
+        <span> - </span>
+        <a class="tree-reorder-link" href="/test/category/reorder/desc/">DESC</a>
+    </li>
+    {% endif %}
+</ul>
+{% endblock %}
+
 {% block content %}
 {{ parent() }}
-
-<div class="actions">
-    <ul>
-        <li><a href="{{ path('test_category_list') }}">List Categories</a></li>
-        {#<li><a href="{{ path('test_add_category') }}">Add Category</a></li>
-        <li><a href="{{ path('test_add_language') }}">Add Language</a></li>#}
-        {% if rootNodes %}
-        <li>
-            <span>Reorder </span>
-            <select name="select-root-category">
-                {% for node in rootNodes %}
-                    <option value="{{ node.getId }}">{{ node.getTitle }}</option>
-                {% endfor %} 
-            </select>
-            <span> Tree by "Title", direction: </span>
-            <a class="tree-reorder-link" href="/test/category/reorder/asc/">ASC</a>
-            <span> - </span>
-            <a class="tree-reorder-link" href="/test/category/reorder/desc/">DESC</a>
-        </li>
-        {% endif %}
-    </ul>
-</div>
 
 <h3>The tree looks like:</h3>
 
@@ -31,11 +43,5 @@
     {{ tree|raw }}
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/gedmotestextensions/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('bundles/gedmotestextensions/js/tree.js') }}"></script>
 {% endblock %}
 

@@ -12,10 +12,12 @@
     </div>
     <div class="span5 languages">
     {% if languages is defined %}
+      {% set routeName = app.request.attributes.get("_route") %}
+      {% set routeParams = app.request.attributes.get("_route_params") %}
       <ul>
       {% for language in languages %}
         <li {% if language.language == app.request.locale %}class="active"{% endif %}>
-          <a href="{{ path('demo_language_change', {'name': language.language}) }}" title="{{ language.title }}">
+          <a href="{{ path(routeName, routeParams|merge({"_locale": language.language})) }}" title="{{ language.title }}">
             {{ language.title }}
           </a>
         </li>

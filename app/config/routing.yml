@@ -12,4 +12,4 @@ _blog:
 
 _demo:
     resource: "@GedmoDemoBundle/Resources/config/routing.yml"
-    prefix: demo
+    prefix: /demo/{_locale}
