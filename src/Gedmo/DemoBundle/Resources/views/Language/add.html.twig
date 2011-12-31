@@ -1,22 +1,28 @@
 {% extends "GedmoDemoBundle::sub_layout.html.twig" %}
 
+{% block actions %}
+<ul>
+    <li><a href="{{ path('demo_category_tree') }}">Show Tree</a></li>
+    <li><a href="{{ path('demo_category_list') }}">Category List</a></li>
+</ul>
+{% endblock %}
+
 {% block content %}
 {{ parent() }}
 
-<div class="actions">
-    <ul>
-        <li><a href="{{ path('test_category_tree') }}">Show Tree</a></li>
-        <li><a href="{{ path('test_category_list') }}">Category List</a></li>
-    </ul>
+{% form_theme form "GedmoDemoBundle::form.html.twig" %}
+
+<div class="row">
+    <form action="{{ path('demo_language_save') }}" method="post">
+      <fieldset>
+      <legend>Add Language</legend>
+        {{ form_row(form.title) }}
+        {{ form_rest(form) }}
+        <div class="actions">
+          <button class="btn primary" type="submit">Add</button>
+        </div>
+      </fieldset>
+    </form>
 </div>
 
-{% form_theme form "GedmoDemoBundle:themes:standard.html.twig" %}
-
-<form action="{{ path('test_language_add') }}" {{ form_enctype(form) }} method="post">
-    {{ form_row(form.title) }}
-    {{ form_hidden(form) }}
-    <div class="submit">
-        <input type="submit" class="button" value="Add" />
-    </div>
-</form>
 {% endblock %}

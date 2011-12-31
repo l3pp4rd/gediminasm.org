@@ -184,30 +184,24 @@ ____SQL;
      * @Route("/edit/{id}", name="demo_category_edit")
      * @ParamConverter("node", class="GedmoDemoBundle:Category")
      * @Template
+     * @Method({"GET", "POST"})
      */
     public function editAction(Category $node)
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $repo = $em->getRepository('Gedmo\\DemoBundle\\Entity\\Category');
-        $form = CategoryForm::create($this->get('form.context'), 'category');
-        $form->bind($this->get('request'), $node);
-        $form->add(
-            new ChoiceField('parent', array(
-                'choices' => $repo->findAllParentChoises(null),
-                'value_transformer' => new Choise($repo),
-                'empty_value' => '---',
-                'required' => false,
-            ))
-        );
+        $form = $this->createForm(new CategoryType($node), $node);
         if ('POST' === $this->get('request')->getMethod()) {
-            $form->bind($this->get('request'), $node);
+            $form->bindRequest($this->get('request'), $node);
             if ($form->isValid()) {
                 $em->persist($node);
                 $em->flush();
-                $this->get('session')->setFlash('message', 'Category was saved');
-                return new RedirectResponse($this->generateUrl('test_category_tree'));
+                $this->get('session')->setFlash('message', 'Category was updated');
+                return $this->redirect($this->generateUrl('demo_category_tree'));
+            } else {
+                $this->get('session')->setFlash('error', 'Fix the following errors');
             }
         }
+        $form = $form->createView();
         return compact('form');
     }
 
@@ -234,7 +228,7 @@ ____SQL;
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($node);
             $em->flush();
-            $this->get('session')->setFlash('message', 'Category was saved');
+            $this->get('session')->setFlash('message', 'Category was added');
             return $this->redirect($this->generateUrl('demo_category_list'));
         } else {
             $this->get('session')->setFlash('error', 'Fix the following errors');

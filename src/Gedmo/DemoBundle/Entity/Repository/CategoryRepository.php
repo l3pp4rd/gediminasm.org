@@ -12,25 +12,21 @@ class CategoryRepository extends NestedTreeRepository
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
         if (!is_null($node)) {
-            $subSelect = $dql.' WHERE c.root = :root';
-            $subSelect .= ' AND c.lft BETWEEN :left AND :right';
+            $subSelect = "SELECT n FROM {$this->_entityName} n";
+            $subSelect .= ' WHERE n.root = '.$node->getRoot();
+            $subSelect .= ' AND n.lft BETWEEN '.$node->getLeft().' AND '.$node->getRight();
 
             $dql .= " WHERE c.id NOT IN ({$subSelect})";
         }
         $q = $this->_em->createQuery($dql);
-        $q->setParameters(array(
-            'root' => $node->getRoot(),
-            'left' => $node->getLeft(),
-            'right' => $node->getRight()
-        ));
         $q->setHint(
             Query::HINT_CUSTOM_OUTPUT_WALKER,
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );
-        $nodes = $q->getResult();
+        $nodes = $q->getArrayResult();
         $indexed = array();
         foreach ($nodes as $node) {
-            $indexed[$node->getId()] = $node;
+            $indexed[$node['id']] = $node['title'];
         }
         return $indexed;
     }

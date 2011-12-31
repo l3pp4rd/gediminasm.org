@@ -7,12 +7,22 @@
 </ul>
 {% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('button.cancel').click(function () {
+        window.history.back(-1);
+    });
+});
+</script>
+{% endblock %}
+
 {% block content %}
 {{ parent() }}
 
 {% form_theme form "GedmoDemoBundle::form.html.twig" %}
 
-<div id="post-comment" class="row">
+<div class="row">
     <form action="{{ path('demo_category_save') }}" method="post">
       <fieldset>
       <legend>Add Category</legend>
@@ -20,8 +30,7 @@
         {{ form_row(form.description) }}
         {{ form_rest(form) }}
         <div class="actions">
-          <button class="btn cancel" type="submit">Cancel</button>
-          <button class="btn primary" type="submit">Save</button>
+          <button class="btn primary" type="submit">Add</button>
         </div>
       </fieldset>
     </form>
