@@ -29,6 +29,10 @@ ____SQL;
             Query::HINT_CUSTOM_OUTPUT_WALKER,
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );
+        $q->setHint(
+            \Gedmo\Translatable\TranslationListener::HINT_INNER_JOIN,
+            $this->get('session')->get('gedmo.trans.inner_join', false)
+        );
 
         $paginator = $this->get('knp_paginator');
         $categories = $paginator->paginate(
@@ -40,6 +44,30 @@ ____SQL;
         $languages = $this->getLanguages();
 
         return compact('categories', 'languages');
+    }
+
+    /**
+     * @Route("/fallback", name="demo_fallback_translation")
+     */
+    public function fallbackAction()
+    {
+        $s = $this->get('session');
+        $fallback = $s->get('gedmo.trans.fallback', false);
+        $fallback = $fallback ? false : true;
+        $s->set('gedmo.trans.fallback', $fallback);
+        return $this->redirect($this->generateUrl('demo_category_tree'));
+    }
+
+    /**
+     * @Route("/inner-strategy", name="demo_inner_strategy")
+     */
+    public function innerAction()
+    {
+        $s = $this->get('session');
+        $strategy = $s->get('gedmo.trans.inner_join', false);
+        $strategy = $strategy ? false : true;
+        $s->set('gedmo.trans.inner_join', $strategy);
+        return $this->redirect($this->generateUrl('demo_category_tree'));
     }
 
     /**
@@ -74,6 +102,10 @@ ____SQL;
             Query::HINT_CUSTOM_OUTPUT_WALKER,
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );
+        $query->setHint(
+            \Gedmo\Translatable\TranslationListener::HINT_INNER_JOIN,
+            $this->get('session')->get('gedmo.trans.inner_join', false)
+        );
         $nodes = $query->getArrayResult();
         $tree = $repo->buildTree($nodes, $options);
         $languages = $this->getLanguages();
@@ -85,7 +117,7 @@ ____SQL;
     }
 
     /**
-     * @Route("/reorder/{direction}/{id}", name="demo_category_reorder")
+     * @Route("/reorder/{id}/{direction}", name="demo_category_reorder", defaults={"direction" = "asc"})
      * @ParamConverter("root", class="GedmoDemoBundle:Category")
      */
     public function reorderAction(Category $root, $direction)
@@ -145,6 +177,10 @@ ____SQL;
             ->setHint(
                 Query::HINT_CUSTOM_OUTPUT_WALKER,
                 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+            )
+            ->setHint(
+                \Gedmo\Translatable\TranslationListener::HINT_INNER_JOIN,
+                $this->get('session')->get('gedmo.trans.inner_join', false)
             )
             ->getSingleResult()
         ;

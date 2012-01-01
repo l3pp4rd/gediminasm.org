@@ -3,9 +3,9 @@
 {% block scripts %}
 <script type="text/javascript">
 $(document).ready(function() {
-    $('a.tree-reorder-link').click(function(){
-        var id = $("select[name='select-root-category'] option:selected").attr('value');
-        $(this).attr('href', $(this).attr('href')+id);
+    $('a.tree-reorder-link').click(function () {
+        var link = $("select[name='select-root-category'] option:selected").attr('value');
+        $(this).attr('href', link + $(this).attr('href'));
         return true;
     });
 });
@@ -22,13 +22,31 @@ $(document).ready(function() {
         <span>Reorder </span>
         <select name="select-root-category">
             {% for node in rootNodes %}
-                <option value="{{ node.id }}">{{ node.title }}</option>
+                <option value="{{ path('demo_category_reorder', {'id': node.id}) }}">{{ node.title }}</option>
             {% endfor %}
         </select>
         <span> Tree by "Title", direction: </span>
-        <a class="tree-reorder-link" href="/demo/category/reorder/asc/">ASC</a>
+        <a class="tree-reorder-link" href="/asc">ASC</a>
         <span> - </span>
-        <a class="tree-reorder-link" href="/test/category/reorder/desc/">DESC</a>
+        <a class="tree-reorder-link" href="/desc">DESC</a>
+    </li>
+    <li>
+      <a href="{{ path('demo_fallback_translation') }}" title="Languages which does not have translation may fallback to default">
+        {% if app.session.get('gedmo.trans.fallback') %}
+            <span><em>Disable</em> translation fallback</span>
+        {% else %}
+            <span><em>Enable</em> translation fallback</span>
+        {% endif %}
+      </a>
+    </li>
+    <li>
+      <a href="{{ path('demo_inner_strategy') }}" title="Wether or not display records which do not have translations">
+        {% if app.session.get('gedmo.trans.inner_join') %}
+            <span>Use <em>left join</em> for translations</span>
+        {% else %}
+            <span>Use <em>inner join</em> for translations</span>
+        {% endif %}
+      </a>
     </li>
     {% endif %}
 </ul>

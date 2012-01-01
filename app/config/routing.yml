@@ -7,6 +7,14 @@ home:
     pattern:  /
     defaults: { _controller: GedmoBlogBundle:Article:index }
 
+test:
+    pattern:  /test/{_locale}
+    defaults: { _controller: GedmoDemoBundle:Category:tree, _locale: en }
+
+demo:
+    pattern:  /demo/{_locale}
+    defaults: { _controller: GedmoDemoBundle:Category:tree, _locale: en }
+
 _blog:
     resource: "@GedmoBlogBundle/Resources/config/routing.yml"
 
