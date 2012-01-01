@@ -23,7 +23,7 @@
 
 {% for category in categories %}
 <tr>
-    <td class="first">{{ category.title }}</td>
+    <td><a href="{{ path('demo_category_show', {'slug': category.slug}) }}">{{ category.title }}</a></td>
     <td>{{ category.description }}</td>
     <td>{{ category.slug }}</td>
     <td>{{ category.updated|date('Y-m-d H:i:s') }}</td>
