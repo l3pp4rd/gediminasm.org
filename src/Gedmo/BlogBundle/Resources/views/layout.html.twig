@@ -20,6 +20,7 @@
   {% stylesheets
     '@GedmoBlogBundle/Resources/public/css/twitter.css'
     '@GedmoBlogBundle/Resources/public/css/style.css'
+    '@GedmoBlogBundle/Resources/public/css/highlighter.css'
     '@GedmoDemoBundle/Resources/public/css/demo.css'
         
       output='css/blog.css'
@@ -49,6 +50,10 @@
 
   {% javascripts
     '@GedmoBlogBundle/Resources/public/js/lib/jquery.js'
+    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shCore.js'
+    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shBrushPhp.js'
+    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shBrushSql.js'
+    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shBrushXml.js'
     '@GedmoBlogBundle/Resources/public/js/blog.js'
       
        output='js/blog.js'
