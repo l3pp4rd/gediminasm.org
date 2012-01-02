@@ -6,6 +6,7 @@ app/bootstrap.php.cache
 app/cache/*
 app/logs/*
 app/config/*.local.yml
+app/config/parameters.yml
 app/phpunit.xml
 build/
 vendor/
