@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
 
 framework:
     #esi:             ~
@@ -11,7 +10,7 @@ framework:
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: true }
-    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    templating:      { engines: ['twig'] }
     default_locale:  %locale%
     session:
         auto_start:     true
@@ -59,18 +58,11 @@ stof_doctrine_extensions:
 # Knp Menu Configuration
 knp_menu:
     twig: ~
-        #template: knp_menu.html.twig
-    templating: true # if true, enables the helper for PHP templates
-    default_renderer: twig # The renderer to use, list is also available by default
+    templating: true
+    default_renderer: twig
 
 # Knp Time Configuration
 knp_time: ~ 
 
 # Swiftmailer Configuration
-#swiftmailer:
-#    transport: %mailer_transport%
-#    host:      %mailer_host%
-#    username:  %mailer_user%
-#    password:  %mailer_password%
-#    spool:     { type: memory }
-
+swiftmailer: ~
