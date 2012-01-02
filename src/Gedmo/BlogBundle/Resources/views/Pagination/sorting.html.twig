@@ -1,1 +1,6 @@
+{% if direction == 'asc' %}
+  {% set options = options|merge({'class': 'header headerSortDown'}) %}
+{% elseif direction == 'desc' %}
+  {% set options = options|merge({'class': 'header headerSortUp'}) %}
+{% endif %}
 <a{% for attr, value in options %} {{ attr }}="{{ value }}"{% endfor %}>{{ title }}</a>

@@ -73,13 +73,33 @@ class UpdateArticlesCommand extends DoctrineCommand
             $article->setSummary($this->getContainer()->get('markdown.parser')->transform(
                 trim(substr($fileContent, $titleEnd + 1, $summaryEnd - $titleEnd - 1))
             ));
-            $article->setContent($this->getContainer()->get('markdown.parser')->transform(
-                trim(substr($fileContent, $summaryEnd))
-            ));
+            $content = trim(substr($fileContent, $summaryEnd));
+            $article->setContent($this->readContent($content));
 
             $this->em->persist($article);
         }
         $this->em->flush();
+    }
+
+    private function readContent($markdown)
+    {
+        $types = array();
+        $preparedMarkdown = preg_replace_callback('@```[ ]*(php|html|xml)?(.+?)```@smi', function ($m) use (&$types) {
+            $types[] = $m[1];
+            return str_replace("\n", "\n    ", $m[2]);
+        }, $markdown);
+
+        $html = $this->getContainer()->get('markdown.parser')->transform($preparedMarkdown);
+        $html = preg_replace_callback('@<code>(.+?)</code>@smi', function ($m) use (&$types) {
+            $type = array_shift($types);
+            $ret = '<pre class="brush: '.($type ? $type : 'text').'">';
+            $ret .= $m[1];
+            return $ret . '</pre>';
+        }, $html);
+
+        $html = str_replace('<pre><pre', '<pre', $html);
+        $html = str_replace('</pre></pre>', '</pre>', $html);
+        return $html;
     }
 
     private function updateExtensionArticles(OutputInterface $output)
@@ -115,9 +135,8 @@ class UpdateArticlesCommand extends DoctrineCommand
             $article->setSummary($this->getContainer()->get('markdown.parser')->transform(
                 trim(substr($fileContent, $titleEnd + 1, $summaryEnd - $titleEnd - 1))
             ));
-            $article->setContent($this->getContainer()->get('markdown.parser')->transform(
-                trim(substr($fileContent, $summaryEnd))
-            ));
+            $content = trim(substr($fileContent, $summaryEnd));
+            $article->setContent($this->readContent($content));
             $this->em->persist($article);
         }
         $this->em->flush();

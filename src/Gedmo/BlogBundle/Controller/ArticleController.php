@@ -35,7 +35,7 @@ ____SQL;
         $articles = $paginator->paginate(
             $q,
             $this->get('request')->query->get('page', 1),
-            10
+            20
         );
         return compact('articles');
     }

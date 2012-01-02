@@ -170,9 +170,9 @@ blog.onContactReady = function() {
 };
 
 blog.highlightSourceCode = function() {
-    $('div.content code').attr('name', 'code').addClass('php');
-    dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
-    dp.SyntaxHighlighter.HighlightAll('code');
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.all();
 };
 
 blog.onArticleViewReady = function() {

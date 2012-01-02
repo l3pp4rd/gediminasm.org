@@ -20,7 +20,8 @@
   {% stylesheets
     '@GedmoBlogBundle/Resources/public/css/twitter.css'
     '@GedmoBlogBundle/Resources/public/css/style.css'
-    '@GedmoBlogBundle/Resources/public/css/highlighter.css'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/styles/shCore.css'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/styles/shThemeRDark.css'
     '@GedmoDemoBundle/Resources/public/css/demo.css'
         
       output='css/blog.css'
@@ -34,8 +35,8 @@
   <div class="topbar">
     <div class="fill">
       <div class="container">
-        <a class="brand" href="#">Gediminas Morkevicius blog</a>
-        {{ knp_menu_render('GedmoBlogBundle:Builder:mainMenu') }}
+        <a class="brand" href="/">Gediminas Morkevicius blog</a>
+        {{ knp_menu_render('GedmoBlogBundle:Builder:mainMenu', {'currentClass': 'active'}) }}
       </div>
     </div>
   </div>
@@ -44,16 +45,17 @@
     {% block content %}{% endblock %}
     
     <footer>
-      <p>&copy; 2010-2012 Gediminas Morkevicius, powered by: <a href="">twitter bootstrap</a>, <a href="">Symfony2</a>, <a href="">Doctrine2</a> PHP-5.3</p>
+      <p>&copy; 2010-2012 Gediminas Morkevicius, <strong>powered by</strong>: <a href="http://twitter.github.com/bootstrap">twitter bootstrap</a>, <a href="http://symfony.com">Symfony2</a>, <a href="http://www.doctrine-project.org/">Doctrine2</a> <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter3.0</a> PHP-5.3</p>
     </footer>
   </div>
 
   {% javascripts
     '@GedmoBlogBundle/Resources/public/js/lib/jquery.js'
-    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shCore.js'
-    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shBrushPhp.js'
-    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shBrushSql.js'
-    '@GedmoBlogBundle/Resources/public/js/lib/highlighter/shBrushXml.js'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shCore.js'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushPhp.js'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushSql.js'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushXml.js'
+    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushPlain.js'
     '@GedmoBlogBundle/Resources/public/js/blog.js'
       
        output='js/blog.js'
