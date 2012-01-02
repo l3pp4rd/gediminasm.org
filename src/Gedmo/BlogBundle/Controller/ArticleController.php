@@ -126,6 +126,7 @@ ____SQL;
                 SELECT c
                 FROM GedmoBlogBundle:Comment c
                 WHERE c.article = :article
+                ORDER BY c.created DESC
 ____SQL;
             $em = $this->get('doctrine.orm.entity_manager');
             $q = $em->createQuery($dql);
@@ -133,7 +134,14 @@ ____SQL;
             $q->setFirstResult($offset);
             $q->setParameters(compact('article'));
 
-            return new Response(json_encode($q->getArrayResult()));
+            $time = $this->get('time.templating.helper.time');
+            $md = $this->get('markdown.parser');
+            $comments = array_map(function ($c) use ($time, $md) {
+                $c['created'] = $time->diff($c['created']);
+                $c['content'] = $md->transform($c['content']);
+                return $c;
+            }, $q->getArrayResult());
+            return new Response(json_encode($comments));
         }
         throw new \BadFunctionCallException('Invalid call context');
     }

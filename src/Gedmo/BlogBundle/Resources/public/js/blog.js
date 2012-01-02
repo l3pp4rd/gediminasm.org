@@ -18,13 +18,13 @@ blog.loadComments = function(offset, articleId) {
 };
 
 blog.createComment = function(idx, comment) {
-    var entry = $('<div class="row comment" id="'+(idx)+'">').append(
+    var entry = $('<div class="row comment" id="'+(idx+1)+'">').append(
         $('<div class="comment-title">').append(
             $('<span class="number">').append(comment.created),
             $('<span class="subject">').append(comment.subject),
             $('<span class="author">').append(comment.author),
             $('<span class="comment-reply">').append(
-                $('<a href="#" class="reply">').append('reply')
+                $('<a href="#" class="reply">').append('[reply]')
             )
         ),
         $('<div class="separator">'),
