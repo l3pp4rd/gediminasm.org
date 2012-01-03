@@ -25,6 +25,7 @@ Proceed with installation:
 
     php bin/vendors install
     php app/console assetic:dump -e dev
+    php app/console doctrine:schema:create
     php app/console gedmo:blog:update
     php app/console gedmo:demo:reload
 
