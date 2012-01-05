@@ -1,0 +1,24 @@
+{
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": ">=2.0.*",
+        "doctrine/orm": "2.1.*",
+        "twig/extensions": "*",
+
+        "symfony/assetic-bundle": "*",
+        "sensio/framework-extra-bundle": "2.*",
+        "sensio/distribution-bundle": "2.0.*",
+        "jms/security-extra-bundle": "1.0.*",
+        "knplabs/knp-paginator-bundle": "*",
+        "knplabs/knp-menu-bundle": "*",
+        "knplabs/knp-time-bundle": "*",
+        "knplabs/knp-markdown-bundle": "*",
+        "stof/doctrine-extensions-bundle": "*"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Gedmo": "src/"
+        }
+    }
+}
