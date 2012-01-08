@@ -169,12 +169,6 @@ blog.onContactReady = function() {
     });
 };
 
-blog.highlightSourceCode = function() {
-    SyntaxHighlighter.defaults['toolbar'] = false;
-    SyntaxHighlighter.defaults['gutter'] = false;
-    SyntaxHighlighter.all();
-};
-
 blog.onArticleViewReady = function() {
     var count = parseInt($('div#comment-count').text());
     $('div#comments').data('count', count);
@@ -231,5 +225,4 @@ blog.onArticleViewReady = function() {
         $('#post-comment').attr('tabindex', -1).focus();
         return false;
     });
-    blog.highlightSourceCode();
 };

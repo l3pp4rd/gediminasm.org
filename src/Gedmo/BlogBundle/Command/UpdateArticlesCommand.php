@@ -81,25 +81,16 @@ class UpdateArticlesCommand extends DoctrineCommand
         $this->em->flush();
     }
 
-    private function readContent($markdown)
+    private function readContent($githubFlaworedMarkdown)
     {
         $types = array();
-        $preparedMarkdown = preg_replace_callback('@```[ ]*(php|html|xml)?(.+?)```@smi', function ($m) use (&$types) {
-            $types[] = $m[1];
-            return str_replace("\n", "\n    ", $m[2]);
-        }, $markdown);
+        $markdown = preg_replace_callback("@```[ ]*([^\n]*)(.+?)```@smi", function ($m) use (&$types) {
+            $types[] = trim($m[1]);
+            return '    '.str_replace("\n", "\n    ", trim($m[2], "\r\n"));
+        }, $githubFlaworedMarkdown);
+        // if need to know a block type, theres a list $types
 
-        $html = $this->getContainer()->get('markdown.parser')->transform($preparedMarkdown);
-        $html = preg_replace_callback('@<code>(.+?)</code>@smi', function ($m) use (&$types) {
-            $type = array_shift($types);
-            $ret = '<pre class="brush: '.($type ? $type : 'text').'">';
-            $ret .= $m[1];
-            return $ret . '</pre>';
-        }, $html);
-
-        $html = str_replace('<pre><pre', '<pre', $html);
-        $html = str_replace('</pre></pre>', '</pre>', $html);
-        return $html;
+        return $this->getContainer()->get('markdown.parser')->transform($markdown);
     }
 
     private function updateExtensionArticles(OutputInterface $output)

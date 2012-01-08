@@ -20,9 +20,8 @@
   {% stylesheets
     '@GedmoBlogBundle/Resources/public/css/twitter.css'
     '@GedmoBlogBundle/Resources/public/css/style.css'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/styles/shCore.css'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/styles/shThemeRDark.css'
     '@GedmoDemoBundle/Resources/public/css/demo.css'
+    '@GedmoBlogBundle/Resources/public/css/github.css'
         
       output='css/blog.css'
   %}
@@ -45,17 +44,13 @@
     {% block content %}{% endblock %}
     
     <footer>
-      <p>&copy; 2010-2012 Gediminas Morkevičius, <strong>powered by</strong>: <a href="http://twitter.github.com/bootstrap">twitter bootstrap</a>, <a href="http://symfony.com">Symfony2</a>, <a href="http://www.doctrine-project.org/">Doctrine2</a> <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter3.0</a> PHP-5.3</p>
+      <p>&copy; 2010-2012 Gediminas Morkevičius, <strong>powered by</strong>: <a href="http://twitter.github.com/bootstrap">twitter bootstrap</a>, <a href="http://symfony.com">Symfony2</a>, <a href="http://www.doctrine-project.org/">Doctrine2</a>, <a href="http://softwaremaniacs.org/soft/highlight/en/">Highlight.js 6.1</a>, PHP-5.3</p>
     </footer>
   </div>
 
   {% javascripts
     '@GedmoBlogBundle/Resources/public/js/lib/jquery.js'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shCore.js'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushPhp.js'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushSql.js'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushXml.js'
-    '@GedmoBlogBundle/Resources/public/syntaxhighlighter/scripts/shBrushPlain.js'
+    '@GedmoBlogBundle/Resources/public/js/lib/highlight.pack.js'
     '@GedmoBlogBundle/Resources/public/js/blog.js'
       
        output='js/blog.js'
