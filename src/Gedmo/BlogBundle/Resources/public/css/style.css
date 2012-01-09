@@ -53,3 +53,17 @@ div.comment-body {
     background: url(../bundles/gedmoblog/img/layout/page.gif) no-repeat left center;
     padding-left: 20px; margin: 0 10px 0 5px;
 }
+
+#donation {
+    position: absolute; top: 60px; right: 45px; border: 0; z-index: 5;
+}
+
+#donation form {
+    margin: 0;
+    padding: 0;
+}
+
+#donation input[type=image] {
+    width: 147px;
+    height: 47px;
+}
