@@ -4,10 +4,10 @@ namespace Gedmo\DemoBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Gedmo\DemoBundle\Entity\Category;
 use Gedmo\DemoBundle\Form\CategoryType;
+use Gedmo\Translatable\TranslationListener;
 use Doctrine\ORM\Query;
 
 class CategoryController extends Controller
@@ -25,14 +25,7 @@ class CategoryController extends Controller
             ORDER BY c.lft ASC
 ____SQL;
         $q = $em->createQuery($dql);
-        $q->setHint(
-            Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );
-        $q->setHint(
-            \Gedmo\Translatable\TranslationListener::HINT_INNER_JOIN,
-            $this->get('session')->get('gedmo.trans.inner_join', false)
-        );
+        $this->setTranslatableHints($q);
 
         $paginator = $this->get('knp_paginator');
         $categories = $paginator->paginate(
@@ -74,14 +67,7 @@ ____SQL;
             ->orderBy('node.root, node.lft', 'ASC')
             ->getQuery()
         ;
-        $query->setHint(
-            Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );
-        $query->setHint(
-            \Gedmo\Translatable\TranslationListener::HINT_INNER_JOIN,
-            $this->get('session')->get('gedmo.trans.inner_join', false)
-        );
+        $this->setTranslatableHints($query);
         $nodes = $query->getArrayResult();
         $tree = $repo->buildTree($nodes, $options);
         $languages = $this->getLanguages();
@@ -94,13 +80,14 @@ ____SQL;
 
     /**
      * @Route("/reorder/{id}/{direction}", name="demo_category_reorder", defaults={"direction" = "asc"})
-     * @ParamConverter("root", class="GedmoDemoBundle:Category")
      */
-    public function reorderAction(Category $root, $direction)
+    public function reorderAction($id, $direction)
     {
+        $root = $this->findNodeOr404($id);
         $repo = $this->get('doctrine.orm.entity_manager')
             ->getRepository('Gedmo\DemoBundle\Entity\Category')
         ;
+
         $direction = in_array($direction, array('asc', 'desc'), false) ? $direction : 'asc';
         $repo->reorder($root, 'title', $direction);
         return $this->redirect($this->generateUrl('demo_category_tree'));
@@ -108,10 +95,10 @@ ____SQL;
 
     /**
      * @Route("/move-up/{id}", name="demo_category_move_up")
-     * @ParamConverter("node", class="GedmoDemoBundle:Category")
      */
-    public function moveUpAction(Category $node)
+    public function moveUpAction($id)
     {
+        $node = $this->findNodeOr404($id);
         $repo = $this->get('doctrine.orm.entity_manager')
             ->getRepository('Gedmo\DemoBundle\Entity\Category')
         ;
@@ -122,10 +109,10 @@ ____SQL;
 
     /**
      * @Route("/move-down/{id}", name="demo_category_move_down")
-     * @ParamConverter("node", class="GedmoDemoBundle:Category")
      */
-    public function moveDownAction(Category $node)
+    public function moveDownAction($id)
     {
+        $node = $this->findNodeOr404($id);
         $repo = $this->get('doctrine.orm.entity_manager')
             ->getRepository('Gedmo\DemoBundle\Entity\Category')
         ;
@@ -146,20 +133,20 @@ ____SQL;
             FROM GedmoDemoBundle:Category c
             WHERE c.slug = :slug
 ____SQL;
-        $node = $em
+        $q = $em
             ->createQuery($dql)
             ->setMaxResults(1)
             ->setParameters(compact('slug'))
-            ->setHint(
-                Query::HINT_CUSTOM_OUTPUT_WALKER,
-                'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-            )
-            ->setHint(
-                \Gedmo\Translatable\TranslationListener::HINT_INNER_JOIN,
-                $this->get('session')->get('gedmo.trans.inner_join', false)
-            )
-            ->getSingleResult()
         ;
+        $this->setTranslatableHints($q);
+        $node = $q->getResult();
+        if (!$node) {
+            throw $this->createNotFoundException(sprintf(
+                'Failed to find Category by slug:[%s]',
+                $slug
+            ));
+        }
+        $node = current($node);
 
         $translationRepo = $em->getRepository(
             'Stof\DoctrineExtensionsBundle\Entity\Translation'
@@ -169,10 +156,7 @@ ____SQL;
             ->getRepository('Gedmo\DemoBundle\Entity\Category')
             ->getPathQuery($node)
         ;
-        $pathQuery->setHint(
-            Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );
+        $this->setTranslatableHints($pathQuery);
         $path = $pathQuery->getArrayResult();
 
         return compact('node', 'translations', 'path');
@@ -180,11 +164,10 @@ ____SQL;
 
     /**
      * @Route("/delete/{id}", name="demo_category_delete")
-     * @ParamConverter("node", class="GedmoDemoBundle:Category")
      */
-    public function deleteAction(Category $node)
+    public function deleteAction($id)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
+        $node = $this->findNodeOr404($id);
         $em->remove($node);
         $em->flush();
         $this->get('session')->setFlash('message', 'Category '.$node->getTitle().' was removed');
@@ -194,13 +177,13 @@ ____SQL;
 
     /**
      * @Route("/edit/{id}", name="demo_category_edit")
-     * @ParamConverter("node", class="GedmoDemoBundle:Category")
      * @Template
      * @Method({"GET", "POST"})
      */
-    public function editAction(Category $node)
+    public function editAction($id)
     {
         $em = $this->get('doctrine.orm.entity_manager');
+        $node = $this->findNodeOr404($id);
         $form = $this->createForm(new CategoryType($node), $node);
         if ('POST' === $this->get('request')->getMethod()) {
             $form->bindRequest($this->get('request'), $node);
@@ -249,11 +232,48 @@ ____SQL;
         return $this->render('GedmoDemoBundle:Category:add.html.twig', compact('form'));
     }
 
+    private function setTranslatableHints(Query $query)
+    {
+        $query->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+        $query->setHint(
+            TranslationListener::HINT_INNER_JOIN,
+            $this->get('session')->get('gedmo.trans.inner_join', false)
+        );
+        $query->setHint(
+            TranslationListener::HINT_TRANSLATABLE_LOCALE,
+            $this->get('request')->get('_locale', 'en')
+        );
+        $query->setHint(
+            TranslationListener::HINT_FALLBACK,
+            $this->get('session')->get('gedmo.trans.fallback', false)
+        );
+    }
+
     private function getLanguages()
     {
         return $this->get('doctrine.orm.entity_manager')
             ->getRepository('Gedmo\DemoBundle\Entity\Language')
             ->findAll()
         ;
+    }
+
+    private function findNodeOr404($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $q = $em->createQuery('SELECT c FROM GedmoDemoBundle:Category c WHERE c.id = :id');
+        $q->setParameter('id', $id);
+        $q->setMaxResults(1);
+        $this->setTranslatableHints($q);
+        $node = $q->getResult();
+        if (!$node) {
+            throw $this->createNotFoundException(sprintf(
+                'Failed to find Category by id:[%s]',
+                $id
+            ));
+        }
+        return current($node);
     }
 }
