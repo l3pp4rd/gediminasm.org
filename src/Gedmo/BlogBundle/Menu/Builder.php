@@ -18,6 +18,7 @@ class Builder extends ContainerAware
         ;
         $menu->addChild('About', array('route' => 'blog_about'));
         $menu->addChild('Contact', array('route' => 'blog_contact'));
+        $menu->addChild('Extension Demo', array('route' => 'demo_category_tree'));
 
         return $menu;
     }

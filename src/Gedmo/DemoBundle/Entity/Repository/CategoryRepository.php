@@ -5,9 +5,12 @@ namespace Gedmo\DemoBundle\Entity\Repository;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Doctrine\ORM\Query;
 use Gedmo\DemoBundle\Entity\Category;
+use Closure;
 
 class CategoryRepository extends NestedTreeRepository
 {
+    public $onChildrenQuery;
+
     public function findAllParentChoises(Category $node = null)
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
@@ -29,5 +32,18 @@ class CategoryRepository extends NestedTreeRepository
             $indexed[$node['id']] = $node['title'];
         }
         return $indexed;
+    }
+
+    /**
+     * Will do reordering based on current translations
+     */
+    public function childrenQuery($node = null, $direct = false, $sortByField = null, $direction = 'ASC')
+    {
+        $q = parent::childrenQuery($node, $direct, $sortByField, $direction);
+        if ($this->onChildrenQuery instanceof Closure) {
+            $c = &$this->onChildrenQuery;
+            $c($q);
+        }
+        return $q;
     }
 }

@@ -6,6 +6,15 @@
     <li><a href="{{ path('demo_category_tree') }}">Show Tree</a></li>
     <li><a href="{{ path('demo_category_add') }}">Add Category</a></li>
     <li><a href="{{ path('demo_language_add') }}">Add Language</a></li>
+    <li>
+      <a href="{{ path('demo_fallback_translation') }}" title="Languages which does not have translation may fallback to default">
+        {% if app.session.get('gedmo.trans.fallback') %}
+            <span><em>Disable</em> translation fallback</span>
+        {% else %}
+            <span><em>Enable</em> translation fallback</span>
+        {% endif %}
+      </a>
+    </li>
 </ul>
 {% endblock %}
 

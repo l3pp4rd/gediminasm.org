@@ -87,6 +87,10 @@ ____SQL;
         $repo = $this->get('doctrine.orm.entity_manager')
             ->getRepository('Gedmo\DemoBundle\Entity\Category')
         ;
+        $self = &$this;
+        $repo->onChildrenQuery = function (Query $q) use (&$self) {
+            $self->setTranslatableHints($q);
+        };
 
         $direction = in_array($direction, array('asc', 'desc'), false) ? $direction : 'asc';
         $repo->reorder($root, 'title', $direction);
@@ -232,7 +236,7 @@ ____SQL;
         return $this->render('GedmoDemoBundle:Category:add.html.twig', compact('form'));
     }
 
-    private function setTranslatableHints(Query $query)
+    public function setTranslatableHints(Query $query)
     {
         $query->setHint(
             Query::HINT_CUSTOM_OUTPUT_WALKER,
