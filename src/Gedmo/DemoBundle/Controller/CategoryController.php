@@ -9,6 +9,7 @@ use Gedmo\DemoBundle\Entity\Category;
 use Gedmo\DemoBundle\Form\CategoryType;
 use Gedmo\Translatable\TranslationListener;
 use Doctrine\ORM\Query;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends Controller
 {
@@ -273,7 +274,7 @@ ____SQL;
         $this->setTranslatableHints($q);
         $node = $q->getResult();
         if (!$node) {
-            throw $this->createNotFoundException(sprintf(
+            throw new NotFoundHttpException(sprintf(
                 'Failed to find Category by id:[%s]',
                 $id
             ));

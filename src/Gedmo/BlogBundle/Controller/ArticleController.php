@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Gedmo\BlogBundle\Entity\Article;
 use Gedmo\BlogBundle\Entity\Comment;
 use Gedmo\BlogBundle\Entity\EmailMessage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class ArticleController extends Controller
 {
@@ -31,11 +33,14 @@ class ArticleController extends Controller
 ____SQL;
         $q = $em->createQuery($dql);
 
+        $whitelist = array('a.created');
+        $distinct = false;
         $paginator = $this->get('knp_paginator');
         $articles = $paginator->paginate(
             $q,
             $this->get('request')->query->get('page', 1),
-            20
+            20,
+            compact('whitelist', 'distinct')
         );
         return compact('articles');
     }
@@ -60,10 +65,14 @@ ____SQL;
         $q = $em->createQuery($dql);
         $q->setMaxResults(1);
         $q->setParameters(compact('slug'));
-        $article = $q->getSingleResult();
+        $article = $q->getResult();
         if (!$article) {
-            throw new \RuntimeException("Article was not found by {$slug}");
+            throw new NotFoundHttpException(sprintf(
+                'Failed to find Article by slug:[%s]',
+                $slug
+            ));
         }
+        $article = current($article);
         $countComments = intval($article['num_comments']);
         $article = $article[0];
 
@@ -114,7 +123,7 @@ ____SQL;
             $params['created'] = $this->get('time.templating.helper.time')->diff(new \DateTime());
             return new Response(json_encode($params));
         }
-        throw new \BadFunctionCallException('Invalid call context');
+        throw new MethodNotAllowedHttpException('Invalid call context');
     }
 
     /**
@@ -145,6 +154,6 @@ ____SQL;
             }, $q->getArrayResult());
             return new Response(json_encode($comments));
         }
-        throw new \BadFunctionCallException('Invalid call context');
+        throw new MethodNotAllowedHttpException('Invalid call context');
     }
 }
