@@ -110,6 +110,8 @@ ____SQL;
             }
             $em->persist($comment);
             $em->flush();
+            $params['content'] = $this->get('markdown.parser')->transform($params['content']);
+            $params['created'] = $this->get('time.templating.helper.time')->diff(new \DateTime());
             return new Response(json_encode($params));
         }
         throw new \BadFunctionCallException('Invalid call context');
