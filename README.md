@@ -22,8 +22,13 @@ Run the following commands:
 Configure your database connection settings in: **app/config/parameters.yml**
 
 Proceed with installation:
+**Note:** it uses latest versions of symfony2 and other vendors. There might be conflicts 
 
-    php bin/vendors install
+    wget http://getcomposer.org/composer.phar
+    php composer.phar install
+    php bin/build_bootstrap
+    php app/console assets:install web
+    php app/console cache:warmup -e dev
     php app/console assetic:dump -e dev
     php app/console doctrine:schema:create
     php app/console gedmo:blog:update
