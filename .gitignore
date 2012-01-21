@@ -8,6 +8,7 @@ app/logs/*
 app/config/*.local.yml
 app/config/parameters.yml
 app/phpunit.xml
+composer.phar
 build/
 vendor/
 .project
