@@ -58,7 +58,10 @@ ____SQL;
                 $linkNode = '<a href="' . $self->generateUrl('demo_category_show', array('slug' => $node['slug']))
                     . '">' . $node['title'] . '</a>'
                 ;
-                return $linkNode . '&nbsp;&nbsp;&nbsp;' . $linkUp . '&nbsp;' . $linkDown;
+                if ($node['level'] !== 0) {
+                    $linkNode .= '&nbsp;&nbsp;&nbsp;' . $linkUp . '&nbsp;' . $linkDown;
+                }
+                return $linkNode;
             }
         );
         $query = $em
