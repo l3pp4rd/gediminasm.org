@@ -44,7 +44,7 @@ class UpdateArticlesCommand extends DoctrineCommand
     private function updateBlogArticles(OutputInterface $output)
     {
         $output->writeLn('Updating blog articles');
-        $refl = new \ReflectionClass('Gedmo\Version');
+        $refl = new \ReflectionClass('Gedmo\DoctrineExtensions');
         $finder = new Finder;
         $finder
             ->files()
@@ -96,7 +96,7 @@ class UpdateArticlesCommand extends DoctrineCommand
     private function updateExtensionArticles(OutputInterface $output)
     {
         $output->writeLn('Updating extension articles');
-        $refl = new \ReflectionClass('Gedmo\Version');
+        $refl = new \ReflectionClass('Gedmo\DoctrineExtensions');
         $docDir = dirname($refl->getFileName()).'/../../doc';
         $finder = new Finder;
         $finder

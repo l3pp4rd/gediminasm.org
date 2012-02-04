@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Gedmo\DemoBundle\Entity\Category;
 use Gedmo\DemoBundle\Form\CategoryType;
-use Gedmo\Translatable\TranslationListener;
+use Gedmo\Translatable\TranslatableListener;
 use Doctrine\ORM\Query;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -247,15 +247,15 @@ ____SQL;
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );
         $query->setHint(
-            TranslationListener::HINT_INNER_JOIN,
+            TranslatableListener::HINT_INNER_JOIN,
             $this->get('session')->get('gedmo.trans.inner_join', false)
         );
         $query->setHint(
-            TranslationListener::HINT_TRANSLATABLE_LOCALE,
+            TranslatableListener::HINT_TRANSLATABLE_LOCALE,
             $this->get('request')->get('_locale', 'en')
         );
         $query->setHint(
-            TranslationListener::HINT_FALLBACK,
+            TranslatableListener::HINT_FALLBACK,
             $this->get('session')->get('gedmo.trans.fallback', false)
         );
     }

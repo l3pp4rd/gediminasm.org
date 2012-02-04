@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: doctrine_extensions.yml }
 
 framework:
     #esi:             ~
@@ -43,17 +44,12 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-
-# Doctrine Extension Configuration
-stof_doctrine_extensions:
-    default_locale: %locale%
-    orm:
-        default:
-            tree: true
-            timestampable: true
-            translatable: true
-            sluggable: true
-            loggable: true
+        mappings:
+            translatable:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
 
 # Knp Menu Configuration
 knp_menu:

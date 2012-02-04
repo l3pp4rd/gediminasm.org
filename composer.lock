@@ -1,5 +1,5 @@
 {
-    "hash": "c2d8619e21be94ac24680a2ec4d6bc19",
+    "hash": "3ea34eeb49982dba84dac9fd1dfe26f7",
     "packages": [
         {
             "package": "knplabs\/knp-components",
@@ -26,12 +26,16 @@
             "version": "master-dev"
         },
         {
-            "package": "knplabs\/knp-menu",
-            "version": "master-dev"
+            "package": "doctrine\/dbal",
+            "version": "2.2.1"
         },
         {
-            "package": "doctrine\/dbal",
-            "version": "2.2.0-RC1"
+            "package": "doctrine\/orm",
+            "version": "2.2.0"
+        },
+        {
+            "package": "knplabs\/knp-menu",
+            "version": "master-dev"
         },
         {
             "package": "twig\/twig",
@@ -46,23 +50,15 @@
             "version": "1.0.2"
         },
         {
-            "package": "doctrine\/orm",
-            "version": "2.2-dev"
-        },
-        {
             "package": "doctrine\/common",
-            "version": "2.2.0-RC5"
-        },
-        {
-            "package": "gedmo\/doctrine-extensions",
-            "version": "master-dev"
+            "version": "2.2.0"
         },
         {
             "package": "sensio\/distribution-bundle",
             "version": "master-dev"
         },
         {
-            "package": "stof\/doctrine-extensions-bundle",
+            "package": "gedmo\/doctrine-extensions",
             "version": "master-dev"
         },
         {

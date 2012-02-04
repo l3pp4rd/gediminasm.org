@@ -13,7 +13,7 @@
         "knplabs/knp-menu-bundle": "*",
         "knplabs/knp-time-bundle": "*",
         "knplabs/knp-markdown-bundle": "*",
-        "stof/doctrine-extensions-bundle": "*"
+        "gedmo/doctrine-extensions": "master-dev"
     },
 
     "config": { 

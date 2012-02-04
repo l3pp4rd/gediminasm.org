@@ -51,7 +51,7 @@ class TestDataReloadCommand extends DoctrineCommand
         $em->persist($lang1);
 
         $translatable = $this->getContainer()->get(
-            'stof_doctrine_extensions.listener.translatable'
+            'gedmo.listener.translatable'
         );
         $translatable->setTranslatableLocale('en');
 
