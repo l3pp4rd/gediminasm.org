@@ -9,7 +9,6 @@
         "symfony/assetic-bundle": "*",
         "symfony/swiftmailer-bundle": "*",
         "symfony/monolog-bundle": "*",
-        "symfony/monolog-bridge": "*",
         "monolog/monolog": "*",
         
         "sensio/framework-extra-bundle": "*",

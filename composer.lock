@@ -1,5 +1,5 @@
 {
-    "hash": "c6dfb3624875f95ee9d5153e1c31abd3",
+    "hash": "0e1e1761274fa44a60337dc3d3a17f7f",
     "packages": [
         {
             "package": "swiftmailer\/swiftmailer",
@@ -15,6 +15,10 @@
         },
         {
             "package": "sensio\/framework-extra-bundle",
+            "version": "master-dev"
+        },
+        {
+            "package": "monolog\/monolog",
             "version": "master-dev"
         },
         {
@@ -88,10 +92,6 @@
         {
             "package": "symfony\/symfony",
             "version": "2.1.0-dev"
-        },
-        {
-            "package": "monolog\/monolog",
-            "version": "master-dev"
         }
     ]
 }
