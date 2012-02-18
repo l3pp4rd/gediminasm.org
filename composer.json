@@ -7,6 +7,11 @@
         "twig/extensions": "*",
 
         "symfony/assetic-bundle": "*",
+        "symfony/swiftmailer-bundle": "*",
+        "symfony/monolog-bundle": "*",
+        "symfony/monolog-bridge": "*",
+        "monolog/monolog": "*",
+        
         "sensio/framework-extra-bundle": "*",
         "sensio/distribution-bundle": "*",
         "knplabs/knp-paginator-bundle": "*",

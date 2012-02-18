@@ -5,14 +5,15 @@ namespace Gedmo\DemoBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 
 class CategoryType extends AbstractType
 {
-    private $node;
+    private $choiceList;
 
-    public function __construct($node = null)
+    public function __construct(EntityChoiceList $choiceList = null)
     {
-        $this->node = $node;
+        $this->choiceList = $choiceList;
     }
 
     public function getName()
@@ -25,26 +26,14 @@ class CategoryType extends AbstractType
         $builder->add('title', 'text', array('required' => false));
         $builder->add('description', 'textarea', array('required' => false));
 
-        $node = &$this->node;
-        // @todo: not possible to set translatable hint??
-        $builder->add('parent', 'entity', array(
+        $options = array(
             'class' => 'GedmoDemoBundle:Category',
             'empty_value' => '---',
             'required' => false,
-            'query_builder' => function(EntityRepository $repo) use ($node) {
-                $qb = $repo->createQueryBuilder('c');
-                if (!is_null($node)) {
-                    $qb->where($qb->expr()->notIn(
-                        'c.id',
-                        $repo
-                            ->createQueryBuilder('n')
-                            ->where('n.root = '.$node->getRoot())
-                            ->andWhere($qb->expr()->between('n.lft', $node->getLeft(), $node->getRight()))
-                            ->getDQL()
-                    ));
-                }
-                return $qb;
-            },
-        ));
+        );
+        if ($this->choiceList) {
+            $options['choice_list'] = $this->choiceList;
+        }
+        $builder->add('parent', 'entity', $options);
     }
 }

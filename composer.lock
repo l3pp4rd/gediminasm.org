@@ -1,6 +1,10 @@
 {
-    "hash": "3ea34eeb49982dba84dac9fd1dfe26f7",
+    "hash": "c6dfb3624875f95ee9d5153e1c31abd3",
     "packages": [
+        {
+            "package": "swiftmailer\/swiftmailer",
+            "version": "4.1.6-dev"
+        },
         {
             "package": "knplabs\/knp-components",
             "version": "master-dev"
@@ -14,12 +18,20 @@
             "version": "master-dev"
         },
         {
+            "package": "symfony\/swiftmailer-bridge",
+            "version": "2.1.0-dev"
+        },
+        {
+            "package": "symfony\/swiftmailer-bundle",
+            "version": "2.1.0-dev"
+        },
+        {
             "package": "kriswallsmith\/assetic",
-            "version": "master-dev"
+            "version": "1.1.0-dev"
         },
         {
             "package": "symfony\/assetic-bundle",
-            "version": "master-dev"
+            "version": "2.1.0-dev"
         },
         {
             "package": "doctrine\/doctrine-bundle",
@@ -39,19 +51,15 @@
         },
         {
             "package": "twig\/twig",
-            "version": "1.6.0-dev"
-        },
-        {
-            "package": "swiftmailer\/swiftmailer",
-            "version": "4.1.6-dev"
-        },
-        {
-            "package": "monolog\/monolog",
-            "version": "1.0.2"
+            "version": "1.7.0-dev"
         },
         {
             "package": "doctrine\/common",
             "version": "2.2.0"
+        },
+        {
+            "package": "symfony\/monolog-bundle",
+            "version": "2.1.0-dev"
         },
         {
             "package": "sensio\/distribution-bundle",
@@ -80,6 +88,10 @@
         {
             "package": "symfony\/symfony",
             "version": "2.1.0-dev"
+        },
+        {
+            "package": "monolog\/monolog",
+            "version": "master-dev"
         }
     ]
 }

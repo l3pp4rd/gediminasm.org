@@ -9,6 +9,8 @@ use Gedmo\DemoBundle\Entity\Category;
 use Gedmo\DemoBundle\Form\CategoryType;
 use Gedmo\Translatable\TranslatableListener;
 use Doctrine\ORM\Query;
+use Gedmo\DemoBundle\Form\ChoiceList\CategoryEntityLoader;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends Controller
@@ -157,7 +159,7 @@ ____SQL;
         $node = current($node);
 
         $translationRepo = $em->getRepository(
-            'Stof\DoctrineExtensionsBundle\Entity\Translation'
+            'Gedmo:Translation'
         );
         $translations = $translationRepo->findTranslations($node);
         $pathQuery = $em
@@ -192,7 +194,14 @@ ____SQL;
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $node = $this->findNodeOr404($id);
-        $form = $this->createForm(new CategoryType($node), $node);
+        $choiceLoader = new CategoryEntityLoader($this, $em, $node);
+        $choiseList = new EntityChoiceList(
+            $em,
+            'Gedmo\DemoBundle\Entity\Category',
+            'title',
+            $choiceLoader
+        );
+        $form = $this->createForm(new CategoryType($choiseList), $node);
         if ('POST' === $this->get('request')->getMethod()) {
             $form->bindRequest($this->get('request'), $node);
             if ($form->isValid()) {
