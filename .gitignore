@@ -2,6 +2,7 @@ web/bundles/
 web/css/
 web/js/
 web/bundles/
+web/schemas
 app/bootstrap.php.cache
 app/cache/*
 app/logs/*

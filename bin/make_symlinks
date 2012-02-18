@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# make xsd symlinks
+
+rm -rf ../web/schemas && \
+mkdir -p ../web/schemas/orm && \
+ln -s ../../../vendor/gedmo/doctrine-extensions/schemas/orm/doctrine-extensions-mapping-2-1.xsd ../web/schemas/orm/doctrine-extensions-mapping-2-1.xsd && \
+ln -s ../../../vendor/gedmo/doctrine-extensions/schemas/orm/doctrine-extensions-mapping-2-2.xsd ../web/schemas/orm/doctrine-extensions-mapping-2-2.xsd && \
+ln -s ../../../vendor/gedmo/doctrine-extensions/schemas/orm/doctrine-extensions-mapping-2-2.xsd ../web/schemas/orm/doctrine-extensions-mapping.xsd && \
+ln -s ../../../vendor/gedmo/doctrine-extensions/schemas/orm/doctrine-extensions-mapping-2-2.xsd ../web/schemas/orm/doctrine-extensions-mapping
