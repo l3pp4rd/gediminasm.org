@@ -1,97 +1,186 @@
 {
-    "hash": "0e1e1761274fa44a60337dc3d3a17f7f",
+    "hash": "6a4d06af147bdf2fb209a9c3c3f7cd7e",
     "packages": [
         {
-            "package": "swiftmailer\/swiftmailer",
-            "version": "4.1.6-dev"
+            "package": "doctrine/common",
+            "version": "dev-master",
+            "source-reference": "f8e2aadf388ab1e6b36263a73d5e314c477f96c7",
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
         },
         {
-            "package": "knplabs\/knp-components",
-            "version": "master-dev"
+            "package": "doctrine/common",
+            "version": "dev-master",
+            "source-reference": "f8e2aadf388ab1e6b36263a73d5e314c477f96c7"
         },
         {
-            "package": "knplabs\/knp-paginator-bundle",
-            "version": "master-dev"
+            "package": "doctrine/dbal",
+            "version": "dev-master",
+            "source-reference": "cb0cda22af24cfe2d6c63c4869569c3a04d2362f"
         },
         {
-            "package": "sensio\/framework-extra-bundle",
-            "version": "master-dev"
+            "package": "doctrine/dbal",
+            "version": "dev-master",
+            "source-reference": "cb0cda22af24cfe2d6c63c4869569c3a04d2362f",
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
         },
         {
-            "package": "monolog\/monolog",
-            "version": "master-dev"
+            "package": "doctrine/doctrine-bundle",
+            "version": "dev-master",
+            "source-reference": "74632539010f1f8887e8afadf41a732efce971c1"
         },
         {
-            "package": "symfony\/swiftmailer-bridge",
-            "version": "2.1.0-dev"
+            "package": "doctrine/orm",
+            "version": "2.2.0-BETA2"
         },
         {
-            "package": "symfony\/swiftmailer-bundle",
-            "version": "2.1.0-dev"
+            "package": "gedmo/doctrine-extensions",
+            "version": "dev-master",
+            "source-reference": "b3c9d2a442a8ada4400116507583e399e9fb58bf"
         },
         {
-            "package": "kriswallsmith\/assetic",
-            "version": "1.1.0-dev"
+            "package": "knplabs/knp-components",
+            "version": "dev-master",
+            "source-reference": "9fa22749e8bb337071d5bf7759f7feecc9baf597"
         },
         {
-            "package": "symfony\/assetic-bundle",
-            "version": "2.1.0-dev"
+            "package": "knplabs/knp-markdown-bundle",
+            "version": "dev-master",
+            "source-reference": "b29850f792f4d62ea9ef6275da59f1214d391c9f"
         },
         {
-            "package": "doctrine\/doctrine-bundle",
-            "version": "master-dev"
+            "package": "knplabs/knp-menu",
+            "version": "1.1.x-dev",
+            "source-reference": "v1.1.1"
         },
         {
-            "package": "doctrine\/dbal",
-            "version": "2.2.1"
+            "package": "knplabs/knp-menu-bundle",
+            "version": "dev-master",
+            "source-reference": "v1.1.0"
         },
         {
-            "package": "doctrine\/orm",
-            "version": "2.2.0"
+            "package": "knplabs/knp-paginator-bundle",
+            "version": "dev-master",
+            "source-reference": "a7d187be6f1847b5cd6e37e6a7f126c8b9caef9b"
         },
         {
-            "package": "knplabs\/knp-menu",
-            "version": "master-dev"
+            "package": "knplabs/knp-time-bundle",
+            "version": "dev-master",
+            "source-reference": "f24d6c80242ce845bc913e96ade2aea86581680a"
         },
         {
-            "package": "twig\/twig",
-            "version": "1.7.0-dev"
+            "package": "kriswallsmith/assetic",
+            "version": "dev-master",
+            "source-reference": "1a1b5f963db158a1065343fab617d25ce351a2dc"
         },
         {
-            "package": "doctrine\/common",
-            "version": "2.2.0"
+            "package": "kriswallsmith/assetic",
+            "version": "dev-master",
+            "source-reference": "1a1b5f963db158a1065343fab617d25ce351a2dc",
+            "alias-pretty-version": "1.1.x-dev",
+            "alias-version": "1.1.9999999.9999999-dev"
         },
         {
-            "package": "symfony\/monolog-bundle",
-            "version": "2.1.0-dev"
+            "package": "monolog/monolog",
+            "version": "1.1.0"
         },
         {
-            "package": "sensio\/distribution-bundle",
-            "version": "master-dev"
+            "package": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "source-reference": "9a1b2ef970575c8b35f72ce857df2fa9aef7b470"
         },
         {
-            "package": "gedmo\/doctrine-extensions",
-            "version": "master-dev"
+            "package": "sensio/framework-extra-bundle",
+            "version": "dev-master",
+            "source-reference": "e00b525b14784ea4f21c14945e58b4a76a530a6a"
         },
         {
-            "package": "knplabs\/knp-markdown-bundle",
-            "version": "master-dev"
+            "package": "swiftmailer/swiftmailer",
+            "version": "dev-master",
+            "source-reference": "9895567cec5a13d1a43db5053defbaad260c1b87"
         },
         {
-            "package": "knplabs\/knp-time-bundle",
-            "version": "master-dev"
+            "package": "swiftmailer/swiftmailer",
+            "version": "dev-master",
+            "source-reference": "9895567cec5a13d1a43db5053defbaad260c1b87",
+            "alias-pretty-version": "4.1.x-dev",
+            "alias-version": "4.1.9999999.9999999-dev"
         },
         {
-            "package": "knplabs\/knp-menu-bundle",
-            "version": "master-dev"
+            "package": "symfony/assetic-bundle",
+            "version": "dev-master",
+            "source-reference": "61c9f363e73b4ecbb72f81eb62675260a1132048"
         },
         {
-            "package": "twig\/extensions",
-            "version": "master-dev"
+            "package": "symfony/monolog-bundle",
+            "version": "dev-master",
+            "source-reference": "51a25acc57f4c027b28f0305976b887e2da6250a"
         },
         {
-            "package": "symfony\/symfony",
-            "version": "2.1.0-dev"
+            "package": "symfony/swiftmailer-bridge",
+            "version": "dev-master",
+            "source-reference": "408eb09f5799d393ddc3d916ec3667857fb3a20d"
+        },
+        {
+            "package": "symfony/swiftmailer-bridge",
+            "version": "dev-master",
+            "source-reference": "408eb09f5799d393ddc3d916ec3667857fb3a20d",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/swiftmailer-bundle",
+            "version": "dev-master",
+            "source-reference": "71e1789868665cf94dc7831f645625fd0f70aac6"
+        },
+        {
+            "package": "symfony/symfony",
+            "version": "dev-master",
+            "source-reference": "1407f112fcfb6565e69b8040c7ceaae810a8acb3"
+        },
+        {
+            "package": "symfony/symfony",
+            "version": "dev-master",
+            "source-reference": "1407f112fcfb6565e69b8040c7ceaae810a8acb3",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "twig/extensions",
+            "version": "dev-master",
+            "source-reference": "feb6d3f10c411e2631997c0a905aa581c80305c1"
+        },
+        {
+            "package": "twig/twig",
+            "version": "dev-master",
+            "source-reference": "0fa26d642994630b2ec19c090149fa56ce84c789"
+        },
+        {
+            "package": "twig/twig",
+            "version": "dev-master",
+            "source-reference": "0fa26d642994630b2ec19c090149fa56ce84c789",
+            "alias-pretty-version": "1.8.x-dev",
+            "alias-version": "1.8.9999999.9999999-dev"
         }
-    ]
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "doctrine/doctrine-bundle": 20,
+        "twig/extensions": 20,
+        "symfony/assetic-bundle": 20,
+        "symfony/swiftmailer-bundle": 20,
+        "symfony/monolog-bundle": 20,
+        "sensio/framework-extra-bundle": 20,
+        "sensio/distribution-bundle": 20,
+        "knplabs/knp-paginator-bundle": 20,
+        "knplabs/knp-menu-bundle": 20,
+        "knplabs/knp-time-bundle": 20,
+        "knplabs/knp-markdown-bundle": 20,
+        "gedmo/doctrine-extensions": 20
+    }
 }
