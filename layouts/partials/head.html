@@ -11,7 +11,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <base href="{{ .Site.BaseURL }}">
 
-  <title> {{ .Title }} &middot; {{ .Site.Title }} </title>
+  {{ if eq .Title .Site.Title }}
+    <title>Programmer's Blog &middot; {{ .Site.Title }} </title>
+  {{ else }}
+    <title> {{ .Title }} &middot; {{ .Site.Title }} </title>
+  {{ end }}
 
   <!-- CSS -->
   <link rel="stylesheet" href="/css/poole.css">
@@ -26,5 +30,5 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   <!-- RSS -->
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} Blog" />
 </head>

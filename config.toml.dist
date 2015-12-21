@@ -5,7 +5,6 @@ languageCode = "en-us"
 title = "Gediminas Morkevicius"
 copyright = "2015-2016 Gediminas Morkevicius"
 MetaDataFormat = "yaml"
-description = "Programmer's Blog"
 
 [Author]
     name = "Gediminas Morkevicius"

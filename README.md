@@ -1,6 +1,6 @@
 # My blog
 
-Powered by [hugo](https://github.com/spf13/hugo/releases) static site generator.
+[My blog](http://gediminasm.org) is powered by [hugo](https://github.com/spf13/hugo/releases) static site generator.
 
 ## Install
 
@@ -14,9 +14,9 @@ Update config:
 
     cp config.toml.dist config.toml
 
-Serve it:
+Serve it on **:1313** port:
 
-    hugo server --theme=hyde-x --buildDrafts --watch
+    make
 
 ## Release
 
