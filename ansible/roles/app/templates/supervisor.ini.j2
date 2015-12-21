@@ -1,0 +1,15 @@
+# vi: set ft=dosini ts=4 sw=4 sts=4 :
+
+[program:{{ hostname }}]
+command=hugo server --theme=hyde-x -p 13131 --baseUrl=http://{{ hostname }} --appendPort=false
+process_name=%(program_name)s
+numprocs=1
+directory={{ current }}
+autostart=true
+autorestart=true
+user={{ user }}
+stdout_logfile=/var/log/supervisor/%(program_name)s.log
+stderr_logfile=/var/log/supervisor/%(program_name)s.log
+stdout_logfile_maxbytes=50MB
+stdout_logfile_backups=5
+sredirect_stderr=true

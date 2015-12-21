@@ -1,0 +1,16 @@
+# vi: set ft=yaml ts=2 sw=2 sts=2 :
+
+user: "{{ ansible_ssh_user }}"
+home: "/home/{{ user }}"
+
+hostname: gediminasm.org
+
+app: "{{ home }}/{{ hostname }}"
+releases: "{{ app }}/releases"
+current: "{{ app }}/current"
+
+keep_num_releases: 5
+https: false
+
+ansible_python_interpreter: "/usr/bin/python"
+

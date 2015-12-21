@@ -1,0 +1,40 @@
+<div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <img src="https://en.gravatar.com/userimage/17771083/b709575dcd5fd225021ef6cf4cecdbf0.jpg?size=200" alt="gravatar">
+      <h1 class="brand"><a href="/">L3pp4rd</a></h1>
+      <p class="lead">{{ .Site.Title }}</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li><a href="/posts/">Posts</a> </li>
+      <li><a href="/about/">About Me</a> </li>
+
+      {{ range .Site.Menus.main }}
+      <li><a href="{{.Url}}"> {{ .Name }} </a></li>
+      {{end}}
+    </ul>
+
+    <a href="https://github.com/l3pp4rd" title="My Github Account">
+      <i class="fa fa-lg fa-github-square"></i>
+    </a>
+    &nbsp;&nbsp;
+    <a href="https://twitter.com/l3pp4rd" title="My Twitter Account">
+      <i class="fa fa-lg fa-twitter-square"></i>
+    </a>
+    &nbsp;&nbsp;
+    <a href="/index.xml" title="Subscribe to RSS feed">
+      <i class="fa fa-lg fa-rss"></i>
+    </a>
+    &nbsp;&nbsp;
+    <a href="https://lt.linkedin.com/in/gedmo" title="My LinkedIn Profile">
+      <i class="fa fa-lg fa-linkedin-square"></i>
+    </a>
+
+    <p class="footnote">
+    <p>Powered by <a href="http://gohugo.io/">Hugo</a> see <a href="https://github.com/l3pp4rd/gediminasm.org">source</a></p>
+      <p class="copyright">&copy; {{.Site.Copyright}}</p>
+    </p>
+
+  </div>
+</div>

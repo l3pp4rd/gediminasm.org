@@ -1,0 +1,5 @@
+---
+# provision and deploy frontends
+- hosts: blog
+  roles:
+    - { role: app }

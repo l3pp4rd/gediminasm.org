@@ -1,0 +1,11 @@
+# vi: set ft=toml ts=4 sw=4 sts=4 :
+
+baseurl = "http://gediminasm.org"
+languageCode = "en-us"
+title = "Gediminas Morkevicius"
+copyright = "2015-2016 Gediminas Morkevicius"
+MetaDataFormat = "yaml"
+description = "Programmer's Blog"
+
+[Author]
+    name = "Gediminas Morkevicius"

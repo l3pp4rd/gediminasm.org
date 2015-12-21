@@ -1,0 +1,55 @@
+---
+- name: install nginx site
+  template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/{{ hostname }}
+  sudo: yes
+  notify:
+    - nginx restart
+  tags: [ nginx ]
+
+- name: ensure nginx vhost enabled
+  file: src=/etc/nginx/sites-available/{{ hostname }} dest=/etc/nginx/sites-enabled/{{ hostname }} state=link
+  sudo: yes
+  notify:
+    - nginx restart
+  tags: [ nginx ]
+
+- name: supervisor configuration
+  sudo: yes
+  template: src=supervisor.ini.j2 dest=/etc/supervisor/conf.d/{{ hostname }}.ini
+  tags: [ app ]
+
+- name: application directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ releases }}"
+  tags: [ app ]
+
+- name: limit stored releases
+  shell: "ls -1dt {{ releases }}/* | tail -n +{{ keep_num_releases }} | xargs rm -rf"
+  tags: [ app ]
+
+- name: new release name
+  shell: date '+%Y%m%d%H%M%S'
+  register: next
+  tags: [ app ]
+
+- name: create new release directory
+  file: path={{ releases }}/{{ next.stdout }} state=directory
+  tags: [ app ]
+
+- name: extract release archive
+  unarchive: src=app.tar.gz dest={{ releases }}/{{ next.stdout }}
+  tags: [ app ]
+
+- name: configuration
+  template: src=config.toml.j2 dest={{ releases }}/{{ next.stdout }}/config.toml
+  tags: [ app ]
+
+- name: link release
+  file: src={{ releases }}/{{ next.stdout }} dest={{ current }} state=link
+  tags: [ app ]
+
+- name: ensure restarted and supervised
+  sudo: yes
+  action: supervisorctl name={{ hostname }} state=restarted
+  tags: [ app ]

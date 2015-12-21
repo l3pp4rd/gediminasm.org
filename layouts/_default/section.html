@@ -1,0 +1,21 @@
+{{ partial "head.html" . }}
+<body lang="en">
+  {{ partial "sidebar.html" . }}
+
+  <section id="main">
+    <div class="content container">
+      <h2 id="title">{{ .Title }}</h2>
+      <ul id="posts">
+        {{ range .Data.Pages }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }} {{ if .GetParam "draft"}}DRAFT{{end}}</a>
+          <div class="meta">{{ .Date.Format "Mon, Jan 2, 2006" }}</div>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+  </section>
+
+  {{ partial "scripts.html" . }}
+</body>
+</html>

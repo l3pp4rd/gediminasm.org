@@ -1,0 +1,9 @@
+.tarignore
+.gitignore
+.gitmodules
+*.tar.gz
+*.log
+ansible
+public
+hugo
+config.*
