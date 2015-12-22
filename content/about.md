@@ -2,7 +2,7 @@
 Date: "2015-12-21T11:21:16+02:00"
 Title: "Gediminas Morkevičius"
 Description: "About me Gediminas Morkevičius"
-Section: about
+Section: "about"
 ---
 
 pragmatic senior software engineer / developer / polyglot.
