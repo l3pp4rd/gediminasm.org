@@ -7,11 +7,12 @@
     </div>
 
     <ul class="sidebar-nav">
-      <li><a href="/posts/">Posts</a> </li>
-      <li><a href="/about/">About Me</a> </li>
+      <li><a href="/posts/">Posts</a></li>
+      <li><a href="/about/">About Me</a></li>
+      <li><a href="http://slides.gediminasm.org">Slide presentations</a></li>
 
       {{ range .Site.Menus.main }}
-      <li><a href="{{.Url}}"> {{ .Name }} </a></li>
+      <li><a href="{{.Url}}"> {{ .Name }}</a></li>
       {{end}}
     </ul>
 
