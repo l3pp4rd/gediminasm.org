@@ -650,7 +650,7 @@ Now if everything is properly configured you should see everything as expected
 
 Easy like that, any sugestions on improvements are very welcome
 
- [1]: http://gediminasm.org/files/smarty.rar "Smarty 3 Zend application"
+ [1]: /files/smarty.rar "Smarty 3 Zend application"
  [2]: #including-smarty
  [3]: #ini
  [4]: #boot
