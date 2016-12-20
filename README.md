@@ -20,5 +20,4 @@ Serve it on **:1313** port:
 
 ## Release
 
-    make release
-    ansible-playbook -i ansible/blog ansible/playbook.yml
+    make deploy

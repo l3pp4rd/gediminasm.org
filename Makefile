@@ -1,4 +1,4 @@
-.PHONY: run release
+.PHONY: run release deploy
 
 run:
 	hugo server --theme=hyde-x --buildDrafts --watch
@@ -6,6 +6,8 @@ run:
 release:
 	tar --exclude-from=.tarignore --exclude-vcs -czf ansible/app.tar.gz .
 
+deploy: release
+	ansible-playbook -i ansible/blog ansible/playbook.yml
 
 deps:
 	@command -v curl >/dev/null 2>&1 || (echo "curl is not available in \$PATH"; exit 1)
